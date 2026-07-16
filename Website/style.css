@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap');
+
+:root {
+  /* colors */
+  --void: #1c1c1c;
+  --void-2: #242424;
+  --void-3: #2d2d2d;
+  --cream: #f3efe5;
+  --cream-dim: #d9d4c7;
+  --ink: #141414;
+  --lime: #ffc72c;
+  --lime-dim: #e0a800;
+  --lime-ink: #2b1d00;
+  --steel: #9a9fa8;
+  --steel-light: #c9cdd3;
+  --steel-dark: #4d525c;
+  --steel-darker: #2b2e34;
+  --danger: #ff5f56;
+
+  --border-hairline: rgba(243, 239, 229, 0.14);
+  --text-muted: var(--cream-dim);
+
+  /* typography */
+  --font-display: 'Big Shoulders Display', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-pixel: 'VT323', monospace;
+
+  --text-display-xl: clamp(64px, 10vw, 168px);
+  --text-display-lg: clamp(40px, 6vw, 88px);
+  --text-display-md: clamp(28px, 4vw, 48px);
+  --text-display-sm: 22px;
+
+  --text-body-lg: 19px;
+  --text-body-md: 16px;
+  --text-body-sm: 14px;
+
+  --text-pixel-lg: 28px;
+  --text-pixel-md: 20px;
+  --text-pixel-sm: 16px;
+
+  --lh-tight: 0.94;
+  --lh-snug: 1.15;
+  --lh-normal: 1.55;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.08em;
+  --tracking-widest: 0.18em;
+
+  /* spacing */
+  --page-margin: clamp(24px, 5vw, 64px);
+
+  /* effects */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  --border-thin: 1px;
+  --border-thick: 2px;
+  --border-heavy: 3px;
+
+  --shadow-hard-sm: 3px 3px 0 var(--ink);
+  --shadow-hard-md: 5px 5px 0 var(--ink);
+  --shadow-hard-lg: 8px 8px 0 var(--ink);
+  --shadow-hard-lime: 5px 5px 0 var(--lime);
+
+  --bevel-out: inset 1px 1px 0 var(--steel-light), inset -1px -1px 0 var(--steel-darker);
+  --bevel-in: inset -1px -1px 0 var(--steel-light), inset 1px 1px 0 var(--steel-darker);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--cream);
+  font-family: var(--font-body);
+}
+
+a {
+  color: var(--lime);
+}
+
+a:hover {
+  color: var(--cream);
+}
