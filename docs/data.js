@@ -5,6 +5,7 @@ const NAV_ITEMS = [
   { label: 'About', href: '#about' },
   { label: 'CV', href: '#cv' },
   { label: 'Work', href: '#work' },
+  { label: 'Papers', href: '#papers' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -66,5 +67,72 @@ const PROJECTS = [
     tags: ['Qiskit', 'Linear algebra', 'ML'],
     summary: 'Self-directed reading toward quantum machine learning — the intended focus of graduate study.',
     detail: 'No shipped project yet — currently building the prerequisites (linear algebra, quantum computing fundamentals, classical ML) with the goal of specialising in quantum machine learning at the graduate level.',
+  },
+];
+
+// Written works — IB assessments and university coursework, written in LaTeX.
+// Each paper links to a browser-viewable PDF and, where available, its LaTeX
+// (.tex) source. Files are served from uploads/papers/. A `tex` of null hides
+// the download button until the source is added.
+const PAPERS = [
+  {
+    id: 'physics-ee',
+    title: 'Precession of a Bicycle Wheel',
+    category: 'IB Diploma',
+    meta: 'Physics · Extended Essay · 2024',
+    tags: ['Physics', 'Gyroscopics', 'Rigid-body dynamics'],
+    summary: 'Extended Essay (≈3,800 words) on the gyroscopic influence of a bicycle’s front wheel when torque is applied — the precession behind a bike’s stability.',
+    pdf: 'uploads/papers/physics-ee.pdf',
+    tex: null,
+  },
+  {
+    id: 'physics-ia',
+    title: 'The Maxwell Wheel',
+    category: 'IB Diploma',
+    meta: 'Physics · Internal Assessment · 2024',
+    tags: ['Physics', 'Rotational dynamics', 'Experiment'],
+    summary: 'Experimental determination of the moment of inertia of a Maxwell wheel, prompted by the apparent loss of weight of the spinning system.',
+    pdf: 'uploads/papers/physics-ia.pdf',
+    tex: null,
+  },
+  {
+    id: 'chemistry-ia',
+    title: 'Aspirin Hydrolysis Kinetics',
+    category: 'IB Diploma',
+    meta: 'Chemistry · Internal Assessment · 2024',
+    tags: ['Chemistry', 'Kinetics', 'Experiment'],
+    summary: 'Measuring how the first-order hydrolysis rate of acetylsalicylic acid (aspirin) changes across pH — a study of the drug’s stability and shelf life.',
+    pdf: 'uploads/papers/chemistry-ia.pdf',
+    tex: null,
+  },
+  {
+    id: 'math-ia',
+    title: 'The Monty Hall Problem',
+    category: 'IB Diploma',
+    meta: 'Mathematics · Internal Assessment · 2024',
+    tags: ['Mathematics', 'Probability'],
+    summary: 'A graphical generalisation of the Monty Hall problem to an arbitrary number of doors, prizes and reveals, grounded in conditional probability.',
+    pdf: 'uploads/papers/math-ia.pdf',
+    tex: null,
+  },
+  {
+    id: 'scc200-design',
+    title: 'Arcade Racing Game — Design Report',
+    category: 'University',
+    meta: 'LZSCC.200 · Group Project · 2026',
+    tags: ['Python', 'Pygame', 'Game design', 'SDLC'],
+    summary: 'Group design report for a 2D arcade-style car racing game in Python/Pygame, covering the full software development life cycle.',
+    pdf: 'uploads/papers/scc200-design-report.pdf',
+    tex: null,
+  },
+  {
+    id: 'scc131-mars',
+    title: 'MARS Grid Game — MIPS Assembly',
+    category: 'University',
+    meta: 'LZSCC.131 · Digital Systems · 2025',
+    tags: ['MIPS Assembly', 'MARS', 'Low-level'],
+    summary: 'Documentation for a grid-based game built in MIPS assembly on the MARS simulator, with a diagram of the code’s control flow.',
+    pdf: 'uploads/papers/scc131-mars-game.pdf',
+    tex: 'uploads/papers/scc131-mars-game.tex',
   },
 ];

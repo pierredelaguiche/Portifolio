@@ -1,0 +1,1578 @@
+\documentclass[12pt]{article}
+\usepackage{tgtermes}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\usepackage{url}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage[makeroom]{cancel}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{lipsum}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{changepage}
+\usepackage{subcaption}
+\usepackage[style=authoryear-ibid,backend=biber]{biblatex}
+
+\tikzset{every picture/.style={line width=0.74pt}}
+
+\addbibresource{sample.bib}
+\author{39603806 (LaTeX Author), 39603784, 39583414, 339582744, 39582493}
+\date{12.02.2026}
+
+\singlespacing
+\setlength\parindent{24pt}
+\setlength{\headheight}{14.5pt}
+\allowdisplaybreaks
+\setlist[itemize]{itemsep=0em, topsep=1.4pt}
+
+\geometry{a4paper, left=30mm, right=25mm, top=20mm, bottom=15mm}
+
+\newlength{\imgboxH}
+\setlength{\imgboxH}{4cm}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhead[R]{15.02.2026}
+\fancyhead[L]{\textbf{Group Project}}
+\fancyhead[C]{}
+\fancyfoot[L]{LZSCC.200}
+\fancyfoot[R]{Group A1}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{2pt}
+
+\noindent\textbf{\Large{Design Report -- Group A1}}\\
+39582493, 339582744, 39583414, 39603784, 39603806
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+\section{Introduction and Project Ideas}
+
+\subsection{Introduction}
+
+This report outlines the design and development process for the SCC.200 Group Project module. The aim of this project is to design and implement a 2D arcade-style game using Python and the Pygame library, suitable for players aged 12 and above.\parencite{python,pygame} The game is intended to be engaging and accessible to younger players, while still offering enough challenge and depth to appeal to older audiences.
+
+At the beginning of the project, each group member proposed one or more game ideas. These ideas were discussed and evaluated based on creativity, feasibility, and suitability within the given timeframe. Through this process, several concepts were refined or rejected due to limitations such as technical complexity or lack of depth. Elements from different ideas were considered, however not all could be included as this would make the project difficult to complete within the limited time.
+
+The final selected game concept is a 2D arcade-style car racing game with simple and easy-to-learn controls, based on the WASD keyboard keys, with the option of implementing power-up’s for a funnier and more unexpected experience. The main goal of the design is to make the game accessible for new players while still being enjoyable and challenging as the game progresses. The game may include features such as different game modes, single-player and multiplayer options, and selectable player visuals. Visual effects, smooth gameplay, and sound effects can be added to create an exciting and engaging experience that encourages players to continue playing.
+
+This project follows the full software development life cycle, including brainstorming ideas, defining requirements, designing the game, implementing features, testing, and documenting the final product. All group members will be contributing to each stage of the project. The rest of this report explains the final game idea in more detail, discusses alternative ideas that were considered, and outlines the reasons for the design decisions made.
+
+\subsection{Similar project ideas}
+
+\subsubsection{Formula 1 idea}
+
+Taking in consideration the genre of racing, we evaluated the idea of creating a game reflecting early arcade-style Formula 1 games, which have always attracted the interest of many fans.\parencite{maxdownforce,formula1ps1}
+
+Racing and cars are well-known to be appreciated by people of any age, gender, and culture, and videogames about them usually have lots of success worldwide because of brands (e.g. Formula 1 and NASCAR) and movies (Cars and Fast \& Furious saga).
+\vspace{4pt}
+
+\noindent\textbf{How to play:}
+\begin{itemize}
+\item Drive around a circuit and race against other Formula 1 cars, simulating a proper world championship. Use simple commands to turn at the corners, accelerate, move left or right to overtake.
+\end{itemize}
+
+\noindent\textbf{Game features:}
+\begin{itemize}
+\item Choose your car and driver
+\item Leaderboards
+\item Select real circuits to race on
+\item Live stats like position, speed, and number of laps
+\end{itemize}
+
+\noindent\textbf{How it inspired our game:}
+\begin{itemize}
+\item Opted for racing as the game genre
+\item Selecting car
+\item Live race leaderboard on the left
+\item Showing which lap the player is in out of the total number of laps
+\item Showing speed of the car
+\item Inspired us for circuit and car physics
+\end{itemize}
+
+\noindent\textbf{Limitations:}
+\begin{itemize}
+\item Hard to code movement of the background and car physics
+\item Hard to implement an offline multiplayer view due to both players using the same keyboard, and the feature resulting in not user-friendly
+\item Too specific topic, opted for a more generic racing game
+\item Copyright and intellectual property barriers
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.49\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/formula1_01.png}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/formula1_02.jpg}
+\end{subfigure}
+\caption{Formula 1 idea}
+\end{figure}
+
+\subsubsection{Mario Bros idea}
+
+Mario Bros is a platform game developed in 1983 and published by Nintendo for arcade games. The game was designed by the two best Nintendo’s chief engineers Shigeru Miyamoto and Gunpei Yokoi.\parencite{mariobros} Players can control the main two characters, Luigi and Mario, as they exterminate turtles, flies, creatures and so on.
+
+Mario Bros 2D platformer is an action game where the player controls Mario and Luigi through jumping and running on blocks, and defeating enemies to finish levels and reach their goal, (e.g. Rescue of Princess Peach in the Mushroom Kingdom). The movement logic is easy and basic, usually only from left-to-right, or backwards.
+\vspace{4pt}
+
+\noindent\textbf{How to play:}
+\begin{itemize}
+\item Movement is easy to understand: you can either run, jump or change directions mid-air. Along your path, you can find enemies that you can defeat by jumping on them and getting rewards, which consist of coins, lives and experience. Other rewards are earned by jumping under blocks, especially the gold ones with ``?'' printed on them, and hit them with your character’s head or just by destroying them. In alternative, you can use other weapons (e.g. Fire Flowers, Super Mushrooms, Super Stars). The goal is reaching the flagpole at the end and/or defeating a final boss.
+\end{itemize}
+
+\noindent\textbf{Game features:}
+\begin{itemize}
+\item 32 playable levels (8 worlds x 4 levels each)
+\item Various level types, e.g. overworld, underground, underwater, castle stages
+\item Each level type has different characteristics animations, tools, and features
+\end{itemize}
+
+\noindent\textbf{How it inspired us:}
+\begin{itemize}
+\item Led us to discuss about the next Mario Kart idea who led us to our final idea
+\end{itemize}
+
+\noindent\textbf{Limitations:}
+\begin{itemize}
+\item The idea felt less unique and more basic than other options
+\item Copyright and intellectual property barriers
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.49\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/mariobros_01.png}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/mariobros_02.png}
+\end{subfigure}
+\caption{Mario Bros idea}
+\end{figure}
+
+\subsubsection{Mario Kart Franchise}
+
+The Nintendo’s Mario Kart franchise is one of our main inspirations taken into consideration during the game idea and design process. Its first edition--Super Mario Kart--was published by Nintendo in 1992 and is considered ideal to study from due to it being 2D. The other edition that was considered was Mario Kart: Super Circuit that was published in 2001 which contains additional features and smoother gameplay.\parencite{supermariokart,mariokartsupercircuit}
+
+While both games are very similar, the Super Circuit edition fixed a lot of issues that the first edition had such as balancing out the different powerups as well as creating uniqueness between the characters and their abilities.
+\vspace{4pt}
+
+\noindent\textbf{How to play:}
+\begin{itemize}
+\item To play both games, the player would choose between different maps and would need to finish certain achievements in order to unlock more features. The season was split into a grand prix season where the different races would give points and build on each other until the winner achieved the cup. As for the gameplay, the user would control his character around the map and would gain powerups that would strategically be used to hinder the other opponents.
+\end{itemize}
+
+\noindent\textbf{Game features:}
+\begin{itemize}
+\item The first edition didn't have as many features as the other one however some shared features was the ability to play both single player and multiplayer with the difference being the ability to add CPU racers in the second edition. The second edition also had a game mode called Battle mode where players enter an arena trying to pop each other’s balloons with unique items with the last player to be alive wins the game.
+\end{itemize}
+
+\noindent\textbf{How it inspired our game:}
+\begin{itemize}
+\item Gave us the idea of doing powerups and obstacles to make the game more skill based.
+\item Gave us the idea to use layers to make the 2D game more ``3D''
+\end{itemize}
+
+\noindent\textbf{Limitations:}
+\begin{itemize}
+\item One of them is the customisability of choosing the karts to play with
+\item There is no online play
+\item The game physics and movements weren't that smooth.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.59\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/mariokart_01.png}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.4\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/mariokart_02.png}
+\end{subfigure}
+\caption{Mario Kart Franchise}
+\end{figure}
+
+\subsection{Alternative project ideas}
+
+\subsubsection{Space Shooter}
+
+Space Shooter is a classic arcade game where the player controls a spaceship and shoots waves of alien enemies.\parencite{spaceinvaders,galaga} The gameplay is simple and familiar, similar to old space shooter games, but with better graphics and sound. The player must avoid enemy attacks and obstacles while trying to survive and score points.
+
+The game has multiple levels that become harder as the player progresses. Different enemies appear with different attack patterns, so players can upgrade their ship, weapons, and abilities using coins or gems earned in the game. Stronger enemies appear at certain levels and require power-ups and stronger upgrades to defeat. The game can also include features like multiplayer modes, and leaderboards.
+\vspace{4pt}
+
+\noindent\textbf{How to play:}
+\begin{itemize}
+\item Control your star ship with simple, classic mechanics—move freely, dodge enemy fire, and shoot strategically. Different alien types require different tactics, and tougher levels demand upgraded ships and weapons. Boss fights test your preparation, so save resources and power up before engaging.
+\end{itemize}
+
+\noindent\textbf{Game features:}
+\begin{itemize}
+\item Classic arcade space shooting with modern visuals and sound
+\item Customizable starships, weapons, and ship perks
+\item Special enemy abilities
+\item Single and multiplayer modes
+\item Different challenges in various game modes
+\end{itemize}
+
+\noindent\textbf{Limitations:}
+\begin{itemize}
+\item The gameplay does not offer many different playstyles
+\item The idea felt less unique and more basic than other options
+\item We preferred other game genres that required more creativity and problem solving skills to implement
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.5\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/spaceshooter_01.jpg}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.37\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/spaceshooter_02.jpg}
+\end{subfigure}
+\caption{Space Shooter}
+\end{figure}
+
+\subsubsection{Dungeon-crawler style -- 2D shooter}
+
+A dungeon-crawler is one of the most common types of 2D shooters. Many games (e.g. Undertale, Soul Knight and Hares) use the common trope of interacting and often shoot at enemies in a 2D-floor from a top down perspective.\parencite{undertale,soulknight,hades} That is the reason I suggested this genre. The creative versatility is unmatched, especially considering story-driven role-playing games (RPGs) in that category. Aside from guns and melee combat, the game could be quickly prototyped.
+
+\noindent\textbf{How to play:}
+\begin{itemize}
+\item Usually complete objectives and unlock map tiles. Objective may entail shooting at enemies and managing health and items. An overarching story ties the progress together, with bosses and storyline.
+\end{itemize}
+
+\noindent\textbf{Game features:}
+\begin{itemize}
+\item Playable character with health and inventory
+\item Item integration (ability to use objects)
+\item Visible goals or enemies
+\item Room unlocking
+\end{itemize}
+
+\noindent\textbf{Limitations:}
+\begin{itemize}
+\item Tile-based is low movement and coordinate-based is hard to implement
+\item Features can feel disconnected
+\item The category is too versatile. This could lead to weak storylines and unambiguous games. This is the main reason why it has been discarded.
+\item The idea felt less unique and more popular than a racing game, despite the versatility of the content.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.32\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/dungeoncrawler_01.jpg}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/dungeoncrawler_02.jpg}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=\imgboxH,keepaspectratio]{img/dungeoncrawler_03.png}
+\end{subfigure}
+\caption{Dungeon-crawler style -- 2D shooter}
+\end{figure}
+
+\section{Game Design}
+
+\subsection{Features and Gameplay}
+
+\subsubsection{Desired gameplay}
+
+The game takes inspiration, as mentioned, from the Formula 1 and Mario Kart ideas. It requires exclusively the WASD - or the arrows, depending on player’s preferences - and Space keys, an intuitive and popular way of playing in gaming. The main goal is to bring competitiveness among users, who can customize their experience by choosing among several cars and tracks, and 5 different game modes, with the possibility of turning on power-up’s similar to the Mario Kart franchise.
+
+\begin{adjustwidth}{-20mm}{-15mm}
+\begin{multicols}{2}[\subsubsection{Desired game features}]
+\raggedcolumns
+\begin{itemize}
+\item The game is played either in single-player or multiplayer mode against 5 AI-controlled cars.
+\item The player can choose among 5 different game modes:
+\begin{itemize}
+\item Single-player:
+\begin{itemize}
+\item Time trial: the player drives around the circuit to get its best lap time and practice for the competitive game modes.
+\item Race: the player competes against 5 AI cars to get the first place and the win
+\item Championship: the players competes in 4 single-player races and tries to get the highest rank in the final standings
+\end{itemize}
+\item Multiplayer:
+\begin{itemize}
+\item Race: the player competes against another player on another laptop and 4 other AI cars
+\item Championship: the two players compete in 4 multiplayer races and try to get a better rank than the other in the final standings
+\end{itemize}
+\end{itemize}
+\item The view to play is 2D topdown on the race track with lap-based races.
+\item The initial game will allow new users to use just one car on just one track - either time trial or race-, but through an XP-based mechanism, the more an user plays the more features they can unlock and use in the game.
+\item The game includes a set of around 5-10 cars to race with.
+\item Each car has different acceleration, top speed and handling values.
+\item Around 8-16 tracks are present in the game each with different features and in different landscapes.
+\item At the end of each race users will be able to check results through leaderboards of lap times, or race or championship standings, based on the game mode selected.
+\item The program stores the player’s personal record in each track in the time trial mode.
+\item The game supports pause, change settings, restart race, and quit functionalities.
+\item The player’s progresses, while playing, are recorded through a sequence of mini sectors and checkpoints. They also allow the possibility of showing live leaderboards, at which lap and sector the player is, how fast the player is going and the current lap time.
+\item During the game:
+\begin{itemize}
+\item The player can pick up power-ups and items that give them temporary powers or affect opponents.
+\item AI cars can also pick up power-ups and use them to beat or disadvantage the player and the other AI cars.
+\end{itemize}
+\item If a car goes out of the track:
+\begin{itemize}
+\item It will be restored to the last checkpoint, if it falls in water or other similar surfaces.
+\item It will be slown down, if it hits a wall or if it goes on a field or other similar surfaces.
+\end{itemize}
+\item If a car makes contact with an obstacle:
+\begin{itemize}
+\item It will be stopped or slown down by it, if it’s a rock or similar.
+\item It will receive a boost, if it’s a LED line or similar.
+\end{itemize}
+\end{itemize}
+\end{multicols}
+\end{adjustwidth}
+
+\subsubsection{Power-Ups and Items}
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=1\textwidth}
+\begin{tabular}{|l|p{0.78\textwidth}|}
+\hline
+\textbf{ITEM} & \textbf{POWER} \\
+\hline
+Fire icon & Increases max speed and acceleration for 5 seconds \\
+\hline
+Gift icon & Allows a huge sprint to the car for 0.5 seconds \\
+\hline
+Oil icon & Leaves an oil stain on the track, that will slow down who will hit it for 1 second \\
+\hline
+Wrench icon & Can be thrown on the track or against a rival within a certain range to slow them down for 1 second \\
+\hline
+Devil icon & Follows the car in front and slows it down for 1 second \\
+\hline
+Red flag icon & Makes all the drivers in front slower for 3 seconds \\
+\hline
+\end{tabular}
+\end{adjustbox}
+\caption{Power-Ups and Items}
+\end{table}
+
+\subsubsection{User Controls}
+
+\begin{itemize}
+\item W / Up Arrow -- Accelerate
+\item S / Down Arrow -- Brake / Reverse
+\item A / Left Arrow -- Steer left
+\item D / Right Arrow -- Steer right
+\item Space -- Use equipped power-up
+\item P / Q -- Pause game
+\end{itemize}
+
+\subsection{Game Design Principles}
+
+The game design principals define the goals and how the corresponding gameplay takes place. There are multiple modes in our game, as defined above, and, depending on the game mode, the playability varies. The first game mode being introduced is the time trial game mode.
+
+\subsubsection{Time Trial Mode}
+
+This game mode is the basis for all the others because of its game interaction with the user, the feedback the user gets and some additional points.
+
+\noindent\textbf{Pursuing and Achieving Goals}\\
+The main goal of having this mode is giving the player the ability to train and get used to the game’s mechanics, the different optimal racing paths on each map, and testing out new cars and power-up’s.
+\begin{itemize}
+\item Short term goals: Getting the fastest possible time.
+\item Medium term goals: Finding optimal paths and shortcuts in various maps. Getting used to the controls such as breaking, drifting, and using power-up’s. Achieving a competitive lap time.
+\item Long term goals: Getting used to different cars and their mechanics/abilities. Being able to constantly repeat your optimal racing line in the duration of a race.
+\end{itemize}
+
+\noindent\textbf{Game Interactivity}\\
+The game interactivity in this mode is considered the starting point where players will have the ability to use keyboard controls to move the car and perform a timed test run. The interactions will go as follows:
+\begin{itemize}
+\item The player chooses the car and map they would like to use,
+\item The program moves to the Game Screen,
+\item Upon entering the game, a countdown will start signalling the start of the lap,
+\item A timer starts and records different times at each mini-sector checkpoint,
+\item The player uses keyboard inputs to move in all directions,
+\item The player will have the ability to drift,
+\item Once the player is satisfied with the experience gained, they can pause the menu and finish the time trial,
+\item After the time trial ends, a leaderboard appears with stats on the laps done during the session, showing the best time, but also the best mini-sectors times.
+\end{itemize}
+
+\noindent\textbf{Feedback}\\
+The game will give the user feedback based on different aspects and stages in the game:
+\begin{itemize}
+\item The cars and maps unlocked based on their experience level
+\item The different abilities each car contains (speed, drifting, handling)
+\item The mini map provides the player with information on their position in the map
+\item Collision with the track’s borders and obstacles slow down the player
+\item A menu provides the player with their lap time, average check point time, and time relative to previous statistics.
+\item The player gains experience based on how many laps are completed and if there is some improvement and record-breaking.
+\end{itemize}
+
+\subsubsection{Race Mode}
+
+The race game mode is a competitive single race implementation of time trial mode. It takes all its aspects with additional implementations depending on the state the player is in.
+
+\noindent\textbf{Pursuing and Achieving Goals}\\
+The main purpose of this game mode is to quickly enter a single race and play against AI cars of varying difficulty.
+\begin{itemize}
+\item Short term goals: Win the race.
+\item Medium term goals: Get used to racing against opponents and obstacles. Improve with managing offensive items to hinder opponents’ laps.
+\item Long term goals: Constantly placing higher against different leveled bots. Winning in all maps against all difficulties.
+\end{itemize}
+
+\noindent\textbf{Game Interactivity}\\
+This mode contains all the previous mode’s interactivities as well as additional features like:
+\begin{itemize}
+\item Using offensive based power-up’s to hinder other players.
+\item Dealing with power-up traps placed by other players.
+\item Gaining a position result compared to opponents’ performances.
+\end{itemize}
+
+\noindent\textbf{Feedback}\\
+Some feedback aspects would change where:
+\begin{itemize}
+\item The minimap now also provides the player with the positions of other players.
+\item The player’s movements are hindered based on the opponent’s chosen power-up trap.
+\item Collisions with opponents will also slow down the player.
+\item The player gains a certain amount of experience points based on their race results.
+\end{itemize}
+
+\subsubsection{Championship Mode}
+
+This mode implements the race game mode 4 times over 4 different tracks, creating a proper championship during those. Standing points are awarded, based on position, similar to how it happens in motorsport competitions.
+
+\noindent\textbf{Pursuing and Achieving Goals}\\
+The player is encouraged to use different strategies when going into every race depending on factors such as: car chosen for the whole championship, the player’s familiarity with each map, the cumulative points gained from previous races.
+\begin{itemize}
+\item Short term goals: Finish the race in the highest possible first place. Get as many points as possible for the final championship standings.
+\item Medium term goals: Gain enough experience points to unlock new cars and power-up’s. Learn the opponent's continuous patterns.
+\item Long term goals: Win the season cup.
+\end{itemize}
+
+\noindent\textbf{Game Interactivity}\\
+It would pretty much stay unchanged.
+
+\noindent\textbf{Feedback}\\
+The resulting feedback added would be given after each race where:
+\begin{itemize}
+\item Players would view their current standings.
+\item Players would gain cumulative statistical insights after each race.
+\end{itemize}
+
+\subsubsection{Multiplayer Race \& Championship Modes}
+
+The multiplayer modes will have the same goals and interactions as the single-player modes (race and championship modes), but this time the feedback will vary since among the other AI cars there will be another real player in the race, connected from another device.
+
+\noindent\textbf{Feedback}\\
+The game interactivity changes here depending on how the multiplayer feature is implemented (making it online using a socket/ making a splitscreen view for each player):
+\begin{itemize}
+\item The other player’s movements will be sent to the current player’s screen.
+\item The feedback will arrive from a second player, apart from the other AI cars.
+\end{itemize}
+
+\subsubsection{Gameplay Variety}
+
+The player must get used to the various cars available, by understanding that each car has better abilities in acceleration, max speed, and handling, and by learning how to exploit these skills in the best way in the different tracks. The player must get used to the different turns and obstacles in each map. The player must strategically plan their car selection as well as their strategies based on the track selected. The game becomes more strategic as the player unlocks more cars, power-up’s, and maps. The harder the bot difficulty, the more strategic players have to use their offensive power-up’s. Players must learn to utilise different game mechanics like drifting to find the most optimal racing line.
+
+\subsubsection{Gameplay Consistency and Fairness}
+
+\begin{itemize}
+\item The game controls shall be the same for all cars regardless of their abilities.
+\item All users shall have the same first and only car unlocked, when playing with the game for the first time.
+\item Experience points shall be fairly distributed based on the player’s final track position for all races
+\end{itemize}
+
+\subsubsection{Avoid Repetition}
+
+\begin{itemize}
+\item During a season (in career mode) the maps shall not be repeated.
+\item The player will be able to save their season’s progress to a file and continue from there.
+\item The cars shall have different abilities and strengths.
+\item The power-up items shall have different powers.
+\item The AI cars shall utilise different racing lines and strategies in a single race so that there is competition and somewhat varying levels between them.
+\item The players will randomly unlock cars using their gained experience points.
+\end{itemize}
+
+\subsection{Game Rules}
+
+\begin{adjustwidth}{-20mm}{-15mm}
+\begin{multicols}{2}[\subsubsection{Constitutive Rules}]
+\raggedcolumns
+\begin{itemize}
+\item The game ends after all laps are completed successfully.
+\item The finish line counts each lap that is completed correctly (i.e. all checkpoints in order).
+\item The game doesn’t finish unless the player’s vehicle completes all laps or the user exits through the menu.
+\item The quickest lap times are displayed on the leaderboards.
+\item The countdown defines the start of the timer. Crossing the finish line defines the end of a lap.
+\item The lap is subdivided into invisible checkpoints that have to be collected. Only by collecting all of them in order can the player complete a lap.
+\item The vehicle is controlled by the player and models physics. Accelerating, braking and turning should be deterministic and reminiscent of real-life cars.
+\item The vehicle is controlled with forward, left, brake/reverse and right, bound to ``w'', ``a'', ``s'', ``d'', respectively - or the four arrows, based on the player’s setting preferences.
+\item The player drifts with the tab button, and uses the spacebar for their item action.
+\item The player can collect and store items from the map.
+\item The vehicle collides with some objects and its speed is temporarily limited till it detaches from it..
+\item The vehicles going off-track causes an event. Depending on the map section, the player will either: lose speed, get collided with (i.e. a wall or obstacle) or respawn at the last verified checkpoint.
+\item A respawn returns the vehicle to the last valid checkpoint.
+\item Enemies follow the same track rules.
+\end{itemize}
+\end{multicols}
+\end{adjustwidth}
+
+\begin{adjustwidth}{-20mm}{-15mm}
+\begin{multicols}{2}[\subsubsection{Operational Rules}]
+\raggedcolumns
+\begin{itemize}
+\item The player races across the map, following the circuit, to be the highest on the leaderboards and/or win the race.
+\item The player should start moving after the countdown
+\item The player should maximize speed to get lower times. Preferably, they avoid collisions and use brakes to turn sharper and faster.
+\item The player should avoid obstacles and respawns.
+\item The player selects his track and game mode.
+\item The player selects his name and car.
+\item The player adjusts his preferences in the settings menu.
+\item The player controls his vehicle throughout a race, with the throttle, the breaks, steering input, drift button and item action.
+\item A drift builds boost and can be released after 2 seconds to give a mini-boost.
+\item Drifting changes the physics engine dramatically, turning the vehicle to one side and lowering the grip with the track. Inputs behave differently.
+\item The player can pause, resume, exit and restart a race at any time, if the program is still running.
+\item The head-up-display (HUD) shows lap, time, speed,minimap, and live position.
+\item Mini-map shows player and enemy positions.
+\item Countdown shows ``3,2,1,GO!'' at the start, blocking movement until the counter reaches ``GO!''.
+\item Results include lap times of all players. Both individual lap times and the complete race time are included.
+\item Difficulty setting changes AI pace.
+\item Time trials don’t have AI racers.
+\item Multiplayer supports only local multiplayer, up to two users.
+\end{itemize}
+\end{multicols}
+\end{adjustwidth}
+
+\begin{adjustwidth}{-20mm}{-15mm}
+\begin{multicols}{2}[\subsubsection{Implicit Rules}]
+\raggedcolumns
+\begin{itemize}
+\item Faster racing lines beat raw speed.
+\item Brake before turning, not during. Drifting, however, is quickest.
+\item Drifting costs control precision.
+\item Bumps punish sloppy driving.
+\item Clean racing minimizes time loss.
+\item Cutting corners risks time but, either intentionally or not, may gain an advantage.
+\item Consistent laps beat risky laps in long races.
+\item Higher speed increases crash risk.
+\item Wide turns reduce steering correction.
+\item Players learn tracks through repetition.
+\item Audio cues reinforce racing feedback.
+\item The game must run reliably offline.
+\item Pausing the game allows for quick restarts and quits.
+\item Different cars have different characteristics, with some optimal for certain racing styles.
+\end{itemize}
+\end{multicols}
+\end{adjustwidth}
+
+\section{Software Engineering}
+
+\subsection{Software Requirements}
+
+\begin{adjustwidth}{-20mm}{-15mm}
+\begin{multicols}{2}[\subsubsection{Functional Requirements}]
+\raggedcolumns
+
+\noindent\textbf{Minimal Requirements:}
+\begin{itemize}[leftmargin=*]
+\item \textbf{F1. Game Structure and Screen Flow}
+\begin{itemize}[leftmargin=*]
+\item The system shall allow transition between screens.
+\item The system shall allow the following order of screen transitioning: Start, Username, Game Mode, Car Selection, Map Selection, Game Screen, End Screen.
+\item The system shall allow the player to transition to the previous and following screen.
+\end{itemize}
+
+\item \textbf{F2. Start Screen}
+\begin{itemize}[leftmargin=*]
+\item The system shall display a start screen when launched.
+\item The player shall be able to move forward to the Username Screen.
+\end{itemize}
+
+\item \textbf{F3. Username Screen}
+\begin{itemize}[leftmargin=*]
+\item The system shall store the usernames used so far in the device.
+\item The system shall store the preferences of each user.
+\item The system shall not allow the user to load a user, if none has ever been created.
+\item The player shall be able to input a new username or load an old one.
+\item The player shall be able to move forward to the Game Mode Screen.
+\end{itemize}
+
+\item \textbf{F4. Game Mode Screen}
+\begin{itemize}[leftmargin=*]
+\item The player shall be able to decide which game mode to play.
+\item The player shall be able to move forward to the Car Selection Screen.
+\end{itemize}
+
+\item \textbf{F5. Car Selection Screen}
+\begin{itemize}[leftmargin=*]
+\item The player shall be able to select a car.
+\item The player shall be able to move forward to the Map Selection Screen.
+\end{itemize}
+
+\item \textbf{F6. Map Selection Screen}
+\begin{itemize}[leftmargin=*]
+\item In time trial and race modes, the player shall be able to select one single map.
+\item In race and championship modes, the player shall be able to select how many laps the race will last.
+\item In championship mode, the player shall be able to select a set of maps, where races will happen.
+\item The player shall be able to move forward to the Game Screen.
+\end{itemize}
+
+\item \textbf{F7. Game Screen}
+\begin{itemize}[leftmargin=*]
+\item The screen shall include a background representing the track.
+\item The screen shall include a player-controlled car.
+\item The player shall be able to pause the race and open the Pause Pop-up menu.
+\end{itemize}
+
+\item \textbf{F8. Core Game Engine}
+\begin{itemize}[leftmargin=*]
+\item The player shall be able to race with the selected car.
+\item The player shall be able to race in the selected track.
+\item The system shall include a basic game engine.
+\item The game engine shall support car movement, including acceleration, braking, and turning.
+\item The game engine shall render the car on screen.
+\item The game engine shall implement simple collision detection.
+\end{itemize}
+
+\item \textbf{F9. AI Cars}
+\begin{itemize}[leftmargin=*]
+\item In race and championship modes, the game shall include AI-controlled opponents.
+\item AI Cars shall not leave the track for no reason.
+\item AI Cars shall follow a racing line.
+\item AI Cars shall be aware of other opponents in track.
+\item AI Cars shall avoid contact with other cars and obstacles.
+\end{itemize}
+
+\item \textbf{F10. Pause Pop-up}
+\begin{itemize}[leftmargin=*]
+\item The player shall be able to close the pop-up menu and resume the session.
+\item The player shall be able to restart the race.
+\item In time trial mode, the player shall be able to end the session.
+\item In race and championship modes, the player shall be able to quit the race.
+\end{itemize}
+
+\item \textbf{F11. Championship Screen (only championship mode)}
+\begin{itemize}[leftmargin=*]
+\item The game shall display a Championship Screen between one championship race and the other.
+\item The screen shall display race results.
+\item The screen shall display a leaderboard until that championship race.
+\item The screen shall follow a championship points allocation system.
+\item The player shall be able to move forward to the next race.
+\end{itemize}
+
+\item \textbf{F12. End Screen}
+\begin{itemize}[leftmargin=*]
+\item The game shall display an End Screen after the race ends.
+\item The screen shall display a leaderboard.
+\item The screen shall display basic race statistics.
+\item The player shall be able to restart the race.
+\item The player shall be able to play the same mode again.
+\item The player shall be able to return to the Start Screen.
+\item The player shall be able to quit the program.
+\end{itemize}
+\end{itemize}
+
+\vspace{6pt}
+\noindent\textbf{Ideal Requirements:}
+\begin{itemize}[leftmargin=*]
+\item \textbf{F13. Track and Environment Enhancements}
+\begin{itemize}[leftmargin=*]
+\item The game shall include borders around the track.
+\item The game shall prevent the player from leaving the track.
+\item The game shall slow down cars that are not on the main track surface.
+\item The game shall display a countdown timer before the race begins.
+\end{itemize}
+
+\item \textbf{F14. HUD (Head-Up Display) Feature}
+\begin{itemize}[leftmargin=*]
+\item The game shall display a HUD during gameplay.
+\item The HUD shall display lap time.
+\item The HUD shall display the current checkpoint.
+\item The HUD shall display car speed.
+\item The HUD shall display a minimap of the track layout and the player’s location.
+\item In race and championship modes, the HUD shall display a live-race leaderboard.
+\item In race and championship modes, the HUD shall display the player’s race position.
+\end{itemize}
+
+\item \textbf{F15. Audio Features}
+\begin{itemize}[leftmargin=*]
+\item The game shall include sound effects.
+\item The game shall include background music.
+\end{itemize}
+
+\item \textbf{F16. Arcade Mode}
+\begin{itemize}[leftmargin=*]
+\item The game shall include gameplay power-ups.
+\item The game shall include an enhanced game engine.
+\item The game shall support drifting mechanics.
+\item Friction shall be reduced while drifting.
+\item Visual tyre marks shall appear and fade on the road.
+\item Drifting shall include sound effects.
+\item The game shall include track obstacles that affect driving.
+\end{itemize}
+
+\item \textbf{F17. Power-up's}
+\begin{itemize}[leftmargin=*]
+\item Fire power-up shall slightly increase the car max speed and acceleration for 5 seconds.
+\item Gift power-up shall allow a huge sprint to the car for 0.5 seconds.
+\item Oil power-up shall leave an oil stain on the track.
+\item The oil stain shall slow down the car that hits for 1 second and then disappear.
+\item Wrench power-up shall allow a car to throw a wrench on the track or against a rival.
+\item The wrench shall slow down another car for 1 second and then disappear.
+\item Devil power-up shall follow the car in front and slow it down for 1 second.
+\item Red flag power-up shall make all the drivers in front slower for 3 seconds.
+\end{itemize}
+
+\item \textbf{F18. Settings Pop-up}
+\begin{itemize}[leftmargin=*]
+\item The player shall be able to access the settings pop-up menu from the Game Mode Screen until the Map Selection Screen.
+\item The player shall be able to access the settings pop-up menu in the Pause Pop-up during the game.
+\item The player shall be able to close the menu.
+\item The player shall be able to turn on and off the audio features.
+\item The player shall be able to change the difficulty level of AI Cars.
+\item The player shall be able to turn on and off the arcade mode.
+\item The player shall be able to change commands from WASD to arrows, and vice versa.
+\item The menu shall include only the settings of turning on/off the audio and changing commands if opened from the Pause Pop-up.
+\end{itemize}
+\end{itemize}
+
+\vspace{6pt}
+\noindent\textbf{Advanced Requirements:}
+\begin{itemize}[leftmargin=*]
+\item \textbf{F19. Multiplayer}
+\begin{itemize}[leftmargin=*]
+\item The game shall allow multiplayer modes between 2 players.
+\item Only race and championship modes shall also be multiplayer modes.
+\item In multiplayer modes, stopping races shall not be allowed.
+\item A Player Screen shall be present between the Username and the Game Mode Screens.
+\item One player shall host the game and the other join it.
+\item The two players shall decide a port, where to play in.
+\item Loading pages shall be introduced and wait for both players to be ready.
+\end{itemize}
+
+\item \textbf{F20. Car and Track Features}
+\begin{itemize}[leftmargin=*]
+\item Every car shall have a rating in max speed, acceleration, and handling.
+\item Every car shall have different skills.
+\item Every track shall have specific features that give advantage and disadvantage to cars with certain skills.
+\end{itemize}
+
+\item \textbf{F21. Progression System}
+\begin{itemize}[leftmargin=*]
+\item The game shall implement a progression and achievement system based on XP points.
+\item The player shall earn XP points every time they play.
+\item Earning XP points shall allow the player to advance through experience levels.
+\item The screens shall display the progression system from the Game Mode Screen until the Map Selection Screen.
+\item Advancing through experience levels shall allow the player to unlock new cars and tracks.
+\item The player shall not be able to select locked cars.
+\item The player shall not be able to select locked tracks.
+\end{itemize}
+\end{itemize}
+\end{multicols}
+\end{adjustwidth}
+
+\begin{adjustwidth}{-20mm}{-15mm}
+\begin{multicols}{2}[\subsubsection{Non-Functional Requirements}]
+\raggedcolumns
+
+\noindent\textbf{Product Requirements:}
+\begin{itemize}[leftmargin=*]
+\item \textbf{NF1. Usability}
+\begin{itemize}[leftmargin=*]
+\item Command help pop-up's shall be present in all screens to direct users.
+\end{itemize}
+
+\item \textbf{NF2. Dependability}
+\begin{itemize}[leftmargin=*]
+\item The system shall run correctly in the latest version of Windows, MacOS, and Linux.
+\item The game shall not crash at any time.
+\end{itemize}
+
+\item \textbf{NF3. Screen}
+\begin{itemize}[leftmargin=*]
+\item The non-full-screen game window shall have a fixed size of 600 $\times$ 400 pixels.
+\item The full-screen game window shall be as large as the whole screen.
+\end{itemize}
+
+\item \textbf{NF4. Time Efficiency}
+\begin{itemize}[leftmargin=*]
+\item Screen transition shall happen in less than 1 second.
+\end{itemize}
+\end{itemize}
+
+\vspace{6pt}
+\noindent\textbf{Organisational Requirements:}
+\begin{itemize}[leftmargin=*]
+\item \textbf{NF5. Git Repository}
+\begin{itemize}[leftmargin=*]
+\item ``requirements.txt'' file shall be present in the repository.
+\item Pygame version to download shall be 2.6.1.
+\item Two people shall authorise a push in the main branch.
+\item For each of the game screens, a branch shall be implemented on GitHub.
+\end{itemize}
+
+\item \textbf{NF6. Coding Practices}
+\begin{itemize}[leftmargin=*]
+\item Every group member shall be a lead author for at least one coding task.
+\item Programming shall be object-oriented.
+\end{itemize}
+
+\item \textbf{NF7. Communication}
+\begin{itemize}[leftmargin=*]
+\item Every member’s work shall be reviewed by at least another member before being considered done.
+\item Whatsapp shall be used daily for in-group communication.
+\end{itemize}
+
+\item \textbf{NF8. Sprints}
+\begin{itemize}[leftmargin=*]
+\item Every 2 weeks a ready-to-launch program draft shall be released.
+\item Every time there is progress in any task, the Jira board shall be updated.
+\item Every sprint on Jira should last 2 weeks.
+\end{itemize}
+\end{itemize}
+
+\vspace{6pt}
+\noindent\textbf{External Requirements:}
+\begin{itemize}[leftmargin=*]
+\item \textbf{NF9. Legislations}
+\begin{itemize}[leftmargin=*]
+\item The game shall comply with PEGI 12 guidelines.
+\item The system shall not break GDPR regulations.
+\end{itemize}
+
+\item \textbf{NF10. Copyright}
+\begin{itemize}[leftmargin=*]
+\item The system shall respect copyrights and intellectual property.
+\item A credits and references screen shall be present.
+\end{itemize}
+
+\item \textbf{NF11. Artificial Intelligence}
+\begin{itemize}[leftmargin=*]
+\item LLMs shall not be used to generate code.
+\end{itemize}
+\end{itemize}
+
+\end{multicols}
+\end{adjustwidth}
+
+
+\subsection{Acceptance Tests}
+
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+
+\begingroup
+\setlength{\parindent}{0pt}
+
+% --- how much extra width you want to steal from margins ---
+\newlength{\widenby}
+\setlength{\widenby}{45mm} % <-- tweak this
+
+% Make longtable use extra width by allowing it to protrude equally
+\setlength{\LTleft}{-0.5\widenby}
+\setlength{\LTright}{-0.5\widenby}
+
+\noindent\begin{longtable}{|l|p{0.22\textwidth}|p{0.43\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{ID} & \textbf{Requirement} & \textbf{Test Steps (Input)} & \textbf{Expected Output (Pass Criteria)} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{ID} & \textbf{Requirement} & \textbf{Test Steps (Input)} & \textbf{Expected Output (Pass Criteria)} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{4}{r}{\small\textit{Continued on next page}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+F1-1 & Game Structure and Screen Flow. &
+From the Start Screen, click the forward navigation button (e.g. “Done” / “Play”) until the last screen is reached. &
+Screens transition correctly and the full sequence is: Start, Username, Game Mode, Car Selection, Map Selection, Game Screen, End Screen. \\
+\hline
+
+F1-2 & Game Structure and Screen Flow. &
+On each screen, click the back navigation button (e.g. “Back”) to return to the previous screen. &
+Each screen transitions back to the correct previous screen without skipping or crashing. \\
+\hline
+
+F2-1 & Start Screen. &
+Launch the program. &
+Start Screen appears first. \\
+\hline
+
+F2-2 & Start Screen. &
+On the Start Screen, click “New user”. &
+Program transitions to the Username Screen in “create new username” state. \\
+\hline
+
+F2-3 & Start Screen. &
+On the Start Screen, click “Load user”. &
+Program transitions to the Username Screen in “select username” state. \\
+\hline
+
+F3-1 & Username Screen. &
+From the Start Screen, click “New user”. On the Username Screen, enter a name and confirm. &
+A username is accepted and the program transitions to the next screen. \\
+\hline
+
+F3-2 & Username Screen. &
+From the Start Screen, click “Load user”. On the Username Screen, select an existing username and confirm. &
+A username is selected and the program transitions to the next screen. \\
+\hline
+
+F3-3 & Username Screen. &
+Start the program for the first time (no user exists). &
+“Load user” is disabled in the Start Screen. \\
+\hline
+
+F3-4 & Username Screen. &
+Start the program for the first time, create a new username, proceed forward, close the game, restart the program. &
+“Load user” is enabled and at least one username is selectable in the Username Screen. \\
+\hline
+
+F4-1 & Game Mode Screen. &
+On the Game Mode Screen, click a game mode button. &
+Program transitions to the Car Selection Screen and the selected game mode is used later in the Game Screen. \\
+\hline
+
+F5-1 & Car Selection Screen. &
+On the Car Selection Screen, click the left/right arrows next to cars repeatedly. &
+The highlighted/selected car changes correctly (previous/next). \\
+\hline
+
+F5-2 & Car Selection Screen. &
+On the Car Selection Screen, click “Done”. &
+Program transitions to the Map Selection Screen. \\
+\hline
+
+F6-1 & Map Selection Screen. &
+Run the program in Time Trial or Race mode. Attempt to select multiple maps. &
+Only one map can be selected at a time. \\
+\hline
+
+F6-2 & Map Selection Screen. &
+Run the program in Championship mode. Attempt to select multiple maps. &
+Instead of individual maps, only one package of maps can be selected at a time. \\
+\hline
+
+F6-3 & Map Selection Screen. &
+Open Map Selection in Race or Championship mode. &
+A lap selection option is available underneath the maps. \\
+\hline
+
+F6-4 & Map Selection Screen. &
+On Map Selection, click “Play”. &
+Program transitions to the Game Screen. \\
+\hline
+
+F7-1 & Game Screen. &
+Enter the Game Screen. &
+Track picture is visible in the background. \\
+\hline
+
+F7-2 & Game Screen. &
+Press WASD or arrow keys. &
+The selected car moves according to input. \\
+\hline
+
+F7-3 & Game Screen. &
+Press Esc or click the Stop/Pause icon. &
+The game is stopped and the Pause Pop-up menu opens. \\
+\hline
+
+F8-1 & Core Game Engine. &
+Start a race and verify the selected car and selected track. &
+Car and track match the selections made in previous screens. \\
+\hline
+
+F8-2 & Core Game Engine. &
+Press W, then S, then A, then D (separately). &
+Car moves forward, breaks/moves backwards, turns left, and turns right, respectively. \\
+\hline
+
+F8-3 & Core Game Engine. &
+Drive into an object to force a collision. &
+Car speed is reduced and max speed is limited until contact ends. \\
+\hline
+
+F9-1 & AI Cars. &
+Start Race or Championship mode. &
+AI cars are present on track. \\
+\hline
+
+F9-2 & AI Cars. &
+Observe AI cars for a sustained period of gameplay. &
+AI cars follow a racing line and do not leave the track. \\
+\hline
+
+F9-3 & AI Cars. &
+Observe AI during racing interactions. &
+AI cars almost never collide with other cars or objects. \\
+\hline
+
+F10-1 & Pause Pop-up. &
+During a race, press Esc or click the Pause/Stop icon. &
+Game simulation is paused, cars stop moving, and the Pause Pop-up is displayed. \\
+\hline
+
+F10-2 & Pause Pop-up. &
+In the Pause Pop-up, click “Resume”. &
+Pause Pop-up closes and the race continues from the same point. \\
+\hline
+
+F10-3 & Pause Pop-up. &
+In the Pause Pop-up, click “Quit the race”. &
+Race is aborted and the program transitions to the End Screen. \\
+\hline
+
+F11-1 & Championship Screen. &
+Play Championship mode and finish a race. &
+After the End Screen, a Championship Screen is displayed before the next race starts. \\
+\hline
+
+F11-2 & Championship Screen. &
+Compare points in the championship leaderboard to finishing positions of completed races. &
+Points follow the defined championship points allocation system. \\
+\hline
+
+F11-3 & Championship Screen. &
+Finish a race belonging to a championship and proceed. &
+Championship standings update before the next race starts. \\
+\hline
+
+F12-1 & End Screen. &
+Finish a race. &
+Race results, leaderboard, and basic race statistics are displayed. \\
+\hline
+
+F12-2 & End Screen. &
+On the End Screen, click “Restart the race”. &
+The just-finished race restarts. \\
+\hline
+
+F12-3 & End Screen. &
+On the End Screen, click “Play again”. &
+Program transitions back to the Car Selection Screen. \\
+\hline
+
+F12-4 & End Screen. &
+On the End Screen, click “Return to the main menu”. &
+Program transitions back to the Start Screen. \\
+\hline
+
+F12-5 & End Screen. &
+On the End Screen, click “Quit”. &
+Program stops running. \\
+\hline
+
+F13-1 & Track and Environment Enhancements. &
+Start a race on any map. &
+Track shows extra environment details. \\
+\hline
+
+F13-2 & Track and Environment Enhancements. &
+Drive into walls/barriers. &
+Car collides and cannot leave the race area. \\
+\hline
+
+F13-3 & Track and Environment Enhancements. &
+Drive off the main track surface. &
+Car handling changes and becomes harder to control. \\
+\hline
+
+F14-1 & HUD Feature. &
+Start any race and begin driving. &
+HUD is visible on top of the game view throughout gameplay. \\
+\hline
+
+F14-2 & HUD Feature. &
+Drive for at least part of a lap and observe the HUD timer. &
+HUD shows current lap time increasing in real time; resets or stores a value when a new lap starts. \\
+\hline
+
+F14-3 & HUD Feature. &
+Start a race/championship with several opponents and observe HUD. &
+HUD includes a live-race leaderboard that updates as positions change. \\
+\hline
+
+F15-1 & Audio Features. &
+Navigate menus and interact with buttons. &
+A short sound effect plays when menu buttons are highlighted or clicked. \\
+\hline
+
+F15-2 & Audio Features. &
+Play a race with audio enabled and perform relevant actions (countdown start, collisions, drift, power-up use). &
+Sound effects play according to user actions (countdown, collision, power-ups, drifts, etc.). \\
+\hline
+
+F16-1 & Arcade Mode. &
+From the Game Mode Screen, select Arcade mode and start a race. &
+Arcade-specific power-ups are available on the track. \\
+\hline
+
+F16-2 & Arcade Mode. &
+In Arcade mode, collect and activate a power-up. &
+The selected power-up triggers an arcade effect. \\
+\hline
+
+F16-3 & Arcade Mode. &
+Compare driving feel in Arcade vs other modes (same track/car if possible). &
+Car feels more responsive/forgiving and handling allows exaggerated arcade effects. \\
+\hline
+
+F17-1 & Power-up’s. &
+Collect a Fire power-up and activate it. &
+Car max speed and acceleration increase for about 5 seconds, then return to normal. \\
+\hline
+
+F17-2 & Power-up’s. &
+Collect a Gift power-up and activate it. &
+Car performs a very strong sprint for about 0.5 seconds, then returns to normal behaviour. \\
+\hline
+
+F17-3 & Power-up’s. &
+Collect an Oil power-up and activate it. &
+An oil stain is created on/behind the player’s position on the track. \\
+\hline
+
+F18-1 & Settings Pop-up. &
+From Game Mode, Car Selection, or Map Selection Screens, click “Settings”. &
+A Settings Pop-up opens over the current screen. \\
+\hline
+
+F18-2 & Settings Pop-up. &
+In Settings, toggle audio from ON to OFF and confirm. &
+Game music and sound effects are muted. \\
+\hline
+
+F19-1 & Multiplayer. &
+From Game Mode Screen, select a multiplayer option and choose 2 players. &
+Multiplayer setup continues with exactly 2 players participating. \\
+\hline
+
+F19-2 & Multiplayer. &
+From Game Mode Screen, select single-player Time Trial. &
+Time Trial is not available as multiplayer; only Race and Championship modes offer multiplayer. \\
+\hline
+
+F19-3 & Multiplayer. &
+Start the program, choose/create username, proceed in multiplayer flow. &
+After Username Screen, a Player Screen appears where both players can identify themselves or log in. \\
+\hline
+
+F20-1 & Car and Track Features. &
+On Car Selection, highlight different cars one by one. &
+Each car shows ratings for max speed, acceleration, and handling. \\
+\hline
+
+F21-1 & Progression System. &
+Play any event (race/time trial), then return to menus. &
+Player earns XP at the end of the event and total XP increases. \\
+\hline
+
+F21-2 & Progression System. &
+Play multiple events until the XP bar fills and a new level is reached. &
+Experience level increases and a level-up indication is shown. \\
+\hline
+
+NF1-1 & Usability. &
+Open every screen in the game. &
+A “?” icon is present in all of them and opens help messages. \\
+\hline
+
+NF2-1 & Dependability. &
+Run the program on the latest Windows, Mac, and Linux versions. &
+Program does not crash. \\
+\hline
+
+NF3-1 & Screen. &
+Run the program not in full screen. &
+Size is fixed at 600 pixels in length and 400 pixels in height. \\
+\hline
+
+NF3-2 & Screen. &
+Run the program in full screen. &
+Screen takes the whole screen. \\
+\hline
+
+NF4-1 & Time Efficiency. &
+Perform all screen transitions. &
+No transition takes longer than 1 second to fully display the screen and its features. \\
+\hline
+
+NF9-1 & Legislations. &
+Check PEGI requirements. &
+No violence or sex mentioned. No frightening images. Follow PEGI 3. \\
+\hline
+
+NF9-2 & Legislations. &
+Check GDPR compliance. &
+No personal data stored. No violation. \\
+\hline
+
+\caption{Acceptance Tests}
+\end{longtable}
+
+\endgroup
+
+
+\section{Implementation Plans}
+
+\subsection{Task List (up to D1 Design Report)}
+
+\noindent\textbf{Week 2 Workshop:}\\
+We received introductive details of the group project and asked several questions to our workshop supervisor to understand how the progression will be in the upcoming weeks. Then we talked about the collaboration tools we may need to use and we ended up with creating a GitHub repository for our project, with access for all the group members.
+
+\noindent\textbf{Week 3 Workshop:}\\
+We read the given ‘Project Brief Document’ to understand the requirements of the project and did brainstorming to find various game and project ideas. We wrote all our ideas down and agreed to find more ideas to discuss thoroughly in our next meeting.
+
+\noindent\textbf{Week 3 Meeting:}\\
+During this meeting, each team member shared the game ideas they found and explained why they could be good choices. We discussed the suggested ideas and compared different game genres to eliminate the least favourable ones. Then all the group members agreed on the car racing game idea.
+
+\noindent\textbf{Week 4 Workshop:}\\
+In the 4th workshop, our game idea was chosen and ready to be presented in order to get approval from the supervisor. We profoundly explained the project idea we want to work on and provided the reasons why we think it’s a great fit for the task. Once the idea got approval, we started to work on the content needed for the D1 Design Report deliverable.
+
+\noindent\textbf{Week 4 Meeting:}\\
+In this meet-up, we spent most of our time working on the Design Report. To keep the working process well organized and easy to manage, we specified the tasks to complete the report and allocated tasks to each member, in consideration of the workload and the given time. Moreover, we reviewed the Design Report examples on Moodle to get an idea of how our final deliverable should look like. We compared different design representations in the examples and took notes to enhance our report.
+
+\noindent\textbf{Week 5 Workshop:}\\
+This was the final workshop for working on the D1 Design deliverable before the deadline. Everyone worked on the remaining parts of the Design Report and discussed ways to improve the work by providing feedback and suggesting enhancements to each other’s sections.
+
+\subsection{Project Plan (Implementation, Milestones, Deliverables)}
+
+
+\noindent\textbf{Programming}
+
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+
+\begingroup
+\setlength{\parindent}{0pt}
+
+% --- how much extra width you want to steal from margins ---
+\setlength{\widenby}{45mm} % <-- tweak this
+
+% Make longtable use extra width by allowing it to protrude equally
+\setlength{\LTleft}{-0.5\widenby}
+\setlength{\LTright}{-0.5\widenby}
+
+\noindent\begin{longtable}{|l|p{0.30\textwidth}|p{0.16\textwidth}|p{0.53\textwidth}|p{0.1\textwidth}|}
+\hline
+\textbf{ID} & \textbf{Task} & \textbf{Dependencies} & \textbf{Deliverables} & \textbf{Deadline (End of Week)} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{ID} & \textbf{Task} & \textbf{Dependencies} & \textbf{Deliverables} & \textbf{Deadline} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{4}{r}{\small\textit{Continued on next page}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+P1 & Implement basic game loop and window setup. & None & Python file initialized with the game layout & 14 \\
+\hline
+P2 & Implement a class-based screen system. & P1 & Python class files providing the core functionality for the screen transitions & 15 \\
+\hline
+P3 & Implement start screen UI with buttons. & P2 & Python class file for start screen UI & 15 \\
+\hline
+P4 & Implement settings menu with audio settings. & P2 & Python file enabling settings menu with audio control & 15 \\
+\hline
+P5 & Implement customization screens. & P2, C2, C3 & Python class files for customization screens & 15 \\
+\hline
+P6 & Implement a core car rendering system. & P1, G1 & Python files rendering the player car on screen & 16 \\
+\hline
+P7 & Implement core car movement mechanics. & P6 & Python files handling acceleration, braking, and turning & 16 \\
+\hline
+P8 & Implement basic collision detection. & P7, G6 & Python files detecting collisions with track boundaries and obstacles & 16 \\
+\hline
+P9 & Implement the main game screen. & P2, P6, P7, P8, C5 & Python files combining track, car, and core game logic & 17 \\
+\hline
+P10 & Implement a countdown timer before race start & P9, S2 & Python files implementing race countdown & 17 \\
+\hline
+P11 & Implement the end screen. & P9 & Python files for end screen UI and functionality & 17 \\
+\hline
+P12 & Connect graphics and audio with programming logic. & G1-G8, S1-S3 & Python files integrating .PNG and .MP3 files & 18 \\
+\hline
+P13 & Do testing and review of all implemented features. & All programming tasks & Updated python files to fix bugs and enhance performance & 19 \\
+\hline
+
+\caption{Programming}
+\end{longtable}
+
+\endgroup
+
+
+% =========================
+% Content Design (longtable)
+% =========================
+\noindent\textbf{Content Design}
+
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+
+\begingroup
+\setlength{\parindent}{0pt}
+
+% --- how much extra width you want to steal from margins ---
+\setlength{\widenby}{45mm} % <-- tweak this
+
+% Make longtable use extra width by allowing it to protrude equally
+\setlength{\LTleft}{-0.5\widenby}
+\setlength{\LTright}{-0.5\widenby}
+
+\noindent\begin{longtable}{|l|p{0.30\textwidth}|p{0.16\textwidth}|p{0.53\textwidth}|p{0.1\textwidth}|}
+\hline
+\textbf{ID} & \textbf{Task} & \textbf{Dependencies} & \textbf{Deliverables} & \textbf{Deadline (End of Week)} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{ID} & \textbf{Task} & \textbf{Dependencies} & \textbf{Deliverables} & \textbf{Deadline} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{4}{r}{\small\textit{Continued on next page}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+C1 & Ideate and define game screens and user flow. & None & Draft describing screens and navigation flow & 13 \\
+\hline
+C2 & Design car types and attributes. & None & Document detailing car design and statistics & 15 \\
+\hline
+C3 & Design cars and customization options. & None & Document describing customization options that will be included in the game & 15 \\
+\hline
+C4 & Ideate holistic game design. & C1 & .PDF file including the design report & 15 \\
+\hline
+C5 & Design racing tracks and layout. & C4 & Document describing track layouts and styles & 15 \\
+\hline
+C6 & Define game rules and racing mechanics. & C2, C5 & Document defining gameplay and mechanics & 15 \\
+\hline
+C7 & Design HUD and UI information layout. & C1 & Document describing HUD elements and their placement on screen & 15 \\
+\hline
+C8 & Design game modes and progression systems. & C4, C6 & Document describing game modes and progression & 16 \\
+\hline
+C9 & Design audio content and real-time feedback. & None & Document defining music and sound effect triggers & 16 \\
+\hline
+C10 & Design AI opponent behaviour. & C6 & Document describing driving and difficulty of AI opponents & 18 \\
+\hline
+
+\caption{Content Design}
+\end{longtable}
+
+\endgroup
+
+
+% =========================
+% Graphics Design (longtable)
+% =========================
+\noindent\textbf{Graphics Design}
+
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+
+\begingroup
+\setlength{\parindent}{0pt}
+
+% --- how much extra width you want to steal from margins ---
+\setlength{\widenby}{45mm} % <-- tweak this
+
+% Make longtable use extra width by allowing it to protrude equally
+\setlength{\LTleft}{-0.5\widenby}
+\setlength{\LTright}{-0.5\widenby}
+
+\noindent\begin{longtable}{|l|p{0.30\textwidth}|p{0.16\textwidth}|p{0.53\textwidth}|p{0.1\textwidth}|}
+\hline
+\textbf{ID} & \textbf{Task} & \textbf{Dependencies} & \textbf{Deliverables} & \textbf{Deadline (End of Week)} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{ID} & \textbf{Task} & \textbf{Dependencies} & \textbf{Deliverables} & \textbf{Deadline} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{4}{r}{\small\textit{Continued on next page}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+G1 & Produce assets for cars. & C2 & .PNG files for all car designs & 16 \\
+\hline
+G2 & Produce assets for maps. & C3 & .PNG files for maps & 16 \\
+\hline
+G3 & Produce assets for the core GUI. & C7 & .PNG files for each asset to create the core GUI & 16 \\
+\hline
+G4 & Produce assets for track background. & C5 & .PNG files for track background & 16 \\
+\hline
+G5 & Produce assets for the minimap. & C5 & .PNG files for minimap images & 16 \\
+\hline
+G6 & Produce assets for the track items/obstacles. & C5 & .PNG files for track objects & 16 \\
+\hline
+G7 & Produce assets for rewards. & C8 & .PNG files for achievements & 17 \\
+\hline
+G8 & Produce assets for AI opponents. & C10 & .PNG files for cars controlled by AI & 18 \\
+\hline
+
+\caption{Graphics Design}
+\end{longtable}
+
+\endgroup
+
+
+% ======================
+% Sound Design (longtable)
+% ======================
+\noindent\textbf{Sound Design}
+
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+
+\begingroup
+\setlength{\parindent}{0pt}
+
+% --- how much extra width you want to steal from margins ---
+\setlength{\widenby}{45mm} % <-- tweak this
+
+% Make longtable use extra width by allowing it to protrude equally
+\setlength{\LTleft}{-0.5\widenby}
+\setlength{\LTright}{-0.5\widenby}
+
+\noindent\begin{longtable}{|l|p{0.30\textwidth}|p{0.16\textwidth}|p{0.53\textwidth}|p{0.1\textwidth}|}
+\hline
+\textbf{ID} & \textbf{Task} & \textbf{Dependencies} & \textbf{Deliverables} & \textbf{Deadline (End of Week)} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{ID} & \textbf{Task} & \textbf{Dependencies} & \textbf{Deliverables} & \textbf{Deadline} \\
+\hline
+\endhead
+
+\hline
+\multicolumn{4}{r}{\small\textit{Continued on next page}} \\
+\endfoot
+
+\hline
+\endlastfoot
+
+S1 & Source a soundtrack for the screens. & C9 & .MP3 files for each required soundtrack & 16 \\
+\hline
+S2 & Source sound effects for countdown timer. & C9 & .MP3 files for race countdown & 16 \\
+\hline
+S3 & Source sound effects for car movement. & C9 & .MP3 files for braking, drifting, acceleration & 17 \\
+\hline
+
+\caption{Sound Design}
+\end{longtable}
+
+\endgroup
+
+
+\subsection{Activity Network (Critical Path and Gantt Chart)}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.45\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=6.5cm,keepaspectratio]{img/activity_network.jpeg}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.54\textwidth}\vspace{0pt}\centering
+\includegraphics[width=\linewidth,height=6.5cm,keepaspectratio]{img/gantt_chart.png}
+\end{subfigure}
+\caption{Activity Network (Critical Path and Gantt Chart)}
+\end{figure}
+
+\clearpage
+\Large\textbf{Appendix For Large Images}
+
+% Insert chart image export here if available
+\begin{figure}[H]
+\centering
+\includegraphics[width=15cm]{img/activity_network.jpeg}
+\caption{Activity Network with Critical Path}
+\end{figure}
+
+% Insert chart image export here if available
+\begin{figure}[H]
+\centering
+\includegraphics[width=14cm]{img/gantt_chart.png}
+\caption{Gantt Chart}
+\end{figure}
+
+\printbibliography
+
+\clearpage
+\Large\textbf{Group Charter}
+\addcontentsline{toc}{section}{Group Charter}
+
+\noindent\textbf{Group A1}
+
+\vspace{6pt}
+\noindent\textbf{Purpose:}\\
+The purpose of this group is to collaborate and enjoy creating a racing game with all the features and to test our limits.
+
+\vspace{6pt}
+\noindent\textbf{Ground Rules:}
+\begin{itemize}[leftmargin=*]
+\item Each member shall stay up to date with other members on what they are working on.
+\item The group shall meet twice every week to discuss progress and upcoming tasks.
+\item If a member is struggling or cannot do a task, they shall inform the group so the issue can be resolved together.
+\item In weekly meetings, relevant parts shall be merged into the main branch on GitHub.
+\item Members shall add comments to their work and follow a unified structure.
+\item Members are allowed to collaborate to complete tasks.
+\item Members can switch tasks, but they must inform the rest of the group.
+\end{itemize}
+
+\vspace{6pt}
+\noindent\textbf{Task Assignments:}
+
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+\noindent\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Member} & \textbf{Assigned IDs} \\
+\hline
+Mohamed & P1, P2, P8, P9, P14, G4, C5, C10 \\
+\hline
+Antonio & P5, P10, P12, G5, C2, C8 \\
+\hline
+Melek & P5, P11, P12, G6, G7, C3 \\
+\hline
+Piere & P6, P7, P9, G1, G8, C6 \\
+\hline
+Andrei & P3, P4, G3, S1, S2, S3, C7, C9 \\
+\hline
+All Members & P13, C1 \\
+\hline
+\end{tabularx}
+
+\vspace{4pt}
+\noindent\textit{* The IDs referenced are from the Project Plan section.}
+
+\end{document}

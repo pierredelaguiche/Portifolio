@@ -88,9 +88,72 @@ function ProjectsGrid({ onSelect }) {
   );
 }
 
+function PaperCard({ paper, onSelect }) {
+  const [hover, setHover] = React.useState(false);
+  return React.createElement('div', {
+    onClick: () => onSelect(paper),
+    onMouseEnter: () => setHover(true),
+    onMouseLeave: () => setHover(false),
+    style: {
+      cursor: 'pointer', background: 'var(--void-2)', border: 'var(--border-thick) solid var(--ink)',
+      boxShadow: hover ? 'var(--shadow-hard-lime)' : 'var(--shadow-hard-sm)',
+      transform: hover ? 'translate(-2px,-2px)' : 'none', padding: '24px',
+      color: 'var(--cream)', fontFamily: 'var(--font-body)', display: 'flex', flexDirection: 'column',
+    },
+  },
+    React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-sm)', textTransform: 'uppercase', lineHeight: 'var(--lh-snug)' } }, paper.title),
+    React.createElement('div', { style: { fontSize: 'var(--text-body-sm)', color: 'var(--text-muted)', marginTop: 6 } }, paper.meta),
+    React.createElement('div', { style: { fontSize: 'var(--text-body-md)', marginTop: 12, lineHeight: 'var(--lh-normal)', color: 'var(--text-muted)', flexGrow: 1 } }, paper.summary),
+    React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 16 } },
+      paper.tags.map((t) => React.createElement('span', {
+        key: t,
+        style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-sm)', border: 'var(--border-thin) solid var(--border-hairline)', padding: '2px 8px', textTransform: 'uppercase' },
+      }, t))),
+    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-sm)', color: 'var(--lime)', textTransform: 'uppercase', marginTop: 16 } }, '▸ Read paper'),
+  );
+}
+
+function PapersSection({ onSelect }) {
+  const categories = [];
+  PAPERS.forEach((p) => { if (!categories.includes(p.category)) categories.push(p.category); });
+  return React.createElement('section', { id: 'papers', style: { padding: '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
+    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '04 / Papers'),
+    React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-md)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 12px' } }, 'Papers'),
+    React.createElement('p', { style: { fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-muted)', maxWidth: '60ch', margin: '0 0 40px', lineHeight: 'var(--lh-normal)' } }, 'Selected written work — IB assessments and university coursework, all written in LaTeX. View each as a PDF in the browser or download the LaTeX source.'),
+    categories.map((cat) => React.createElement('div', { key: cat, style: { marginBottom: 40 } },
+      React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)', marginBottom: 16, borderBottom: '1px solid var(--border-hairline)', paddingBottom: 8 } }, '* ' + cat),
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 20 } },
+        PAPERS.filter((p) => p.category === cat).map((p) => React.createElement(PaperCard, { key: p.id, paper: p, onSelect }))))),
+  );
+}
+
+function PaperViewer({ paper, onClose }) {
+  if (!paper) return null;
+  return React.createElement('div', {
+    onClick: onClose,
+    style: { position: 'fixed', inset: 0, background: 'rgba(11,13,16,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: 24 },
+  },
+    React.createElement('div', { onClick: (e) => e.stopPropagation(), style: { background: 'var(--void-2)', border: '2px solid var(--ink)', boxShadow: 'var(--shadow-hard-lg)', maxWidth: 900, width: '100%', display: 'flex', flexDirection: 'column', maxHeight: '92vh' } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 18px', borderBottom: '1px solid var(--steel-darker)', fontFamily: 'var(--font-pixel)', color: 'var(--lime)', textTransform: 'uppercase' } },
+        React.createElement('span', null, '*Paper'),
+        React.createElement('span', { onClick: onClose, style: { cursor: 'pointer', color: 'var(--cream)' } }, '× close')),
+      React.createElement('div', { style: { padding: '20px 24px 0' } },
+        React.createElement('h3', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 26, textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 4px' } }, paper.title),
+        React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--text-muted)', fontSize: 'var(--text-pixel-sm)', marginBottom: 16 } }, paper.meta)),
+      React.createElement('div', { style: { padding: '0 24px', flexGrow: 1, minHeight: 0 } },
+        React.createElement('iframe', { src: paper.pdf, title: paper.title, style: { width: '100%', height: '58vh', border: '2px solid var(--ink)', background: 'var(--cream)' } })),
+      React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap', padding: '18px 24px 24px' } },
+        React.createElement(Button, { variant: 'primary', glyph: '↗', href: paper.pdf }, 'Open PDF'),
+        paper.tex ? React.createElement('a', {
+          href: paper.tex, download: true,
+          style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-md)', letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 20px', border: 'var(--border-thin) solid var(--border-hairline)', color: 'var(--cream)', textDecoration: 'none' },
+        }, 'Download .tex') : null)),
+  );
+}
+
 function Contact() {
   return React.createElement('section', { id: 'contact', style: { padding: '96px var(--page-margin)', textAlign: 'left' } },
-    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '04 / Contact'),
+    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '05 / Contact'),
     React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-lg)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 32px', lineHeight: 'var(--lh-tight)', maxWidth: '16ch' } }, 'Let’s talk'),
     React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap' } },
       React.createElement(Button, { variant: 'primary', glyph: '▸', href: 'mailto:pierre.delaguiche@gmail.com' }, 'pierre.delaguiche@gmail.com'),
@@ -122,6 +185,7 @@ function ProjectDetail({ project, onClose }) {
 function App() {
   const [active, setActive] = React.useState('#hero');
   const [selected, setSelected] = React.useState(null);
+  const [paper, setPaper] = React.useState(null);
   return React.createElement(React.Fragment, null,
     React.createElement(NavBar, { items: NAV_ITEMS, activeHref: active, ctaLabel: 'Resume', ctaHref: 'uploads/CV_Jun_26_English.pdf' }),
     React.createElement('div', { onClickCapture: (e) => { const a = e.target.closest('a[href^="#"]'); if (a) setActive(a.getAttribute('href')); } },
@@ -129,8 +193,10 @@ function App() {
       React.createElement(About),
       React.createElement(ExperienceTimeline),
       React.createElement(ProjectsGrid, { onSelect: setSelected }),
+      React.createElement(PapersSection, { onSelect: setPaper }),
       React.createElement(Contact)),
     React.createElement(ProjectDetail, { project: selected, onClose: () => setSelected(null) }),
+    React.createElement(PaperViewer, { paper: paper, onClose: () => setPaper(null) }),
   );
 }
 

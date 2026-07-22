@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\usepackage{tgtermes}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{csquotes}% Recommended
+\usepackage{url}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage[makeroom]{cancel}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage[style=authoryear-ibid,backend=biber]{biblatex}
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt 
+
+\addbibresource{sample.bib}% Syntax for version >= 1.2
+\author{39603806}
+\date{17.03.2025}
+
+\singlespacing
+\setlength\parindent{24pt}
+\allowdisplaybreaks
+
+\geometry{a4paper, left=35mm, right=30mm, top=20mm, bottom=20mm}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhead[R]{}
+\fancyhead[L]{\textbf{Digital Systems Coursework}}
+\fancyhead[C]{}
+\fancyfoot[L]{LZSCC 131 Coursework}
+\fancyfoot[R]{39603806}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{2pt}
+
+\noindent\textbf{MARS Game Documentation}\\
+This report is an overview on the approach used to create a grid based game on \texttt{MARS}, a GUI, Java-based simulator for the MIPS assembly language \parencite{vollmar2006mars,Sanderson_Vollmar_2006} (learned partially thanks to \textcite{smart-uu}). Said game sits inside of a seven by seven grid, where, if the player \texttt{P} reaches a reward \texttt{R}, a scoreboard above the grid increments by five. The player object \texttt{P} can be moved with \texttt{w}, \texttt{a}, \texttt{s} and \texttt{d}. The player will keep moving in the last direction it was prompted to. If the scoreboard reaches one hundred points or the player touches the border, the game will terminate and output the final score.\\
+\\
+\textbf{Design and Implementation Overview}\\
+The program is organized in a few function callers and functions. These are portrayed in figure~\ref{fig:Code Diagram} somewhat unconventionally, with priority on the demonstration of the pathways taken within the code. Jumps in the diagram are depicted as arrows, with \texttt{jal} being colored red.\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{img/codeDiagram.png}
+\caption{Code Diagram}
+\label{fig:Code Diagram}
+\end{figure}
+\par Many of the design choices chosen have disadvantages, and some may render the program unusable given the device. In an itemized manner, the approach and the reason for it are explained for major code sections at a time.
+\par\texttt{init\_game:}Initializes the player environment and its variables by loading static memory into initialized memory, as well as prints said initial state. This is done by calling \texttt{create\_reward}, \texttt{init\_buffers} and \texttt{frame\_update} before returning to \texttt{main}.
+\par\texttt{wait\_input:} Check for the display's ready bit and loops if still equal to 0. This is done so that the player doesn't accidentally start moving by itself.
+\par\texttt{main\_loop:} The primary game loop. As the main function caller, it calls upon \texttt{input\_and\_game\_state}, \texttt{frame\_update} and \texttt{delay} in that order, as to optimize response time from the last input.
+\par\texttt{input\_and\_game\_state:} Function caller that echoes the input, branches to a function to create the next player position depending on input and checks that next player position is valid (calling \texttt{create\_reward} if applicable). Saves the updated grid.
+\par\texttt{frame\_update:} – Refreshes display by printing thirty new lines and reprints the grid. This does not erase the previous grid, but masks it for the use. Although not desirable, reduces program complexity. This was used instead of clearing the display due to the lack of suitable options found (even when printing all possible ASCII characters)(although one certainly existing). 
+\par\texttt{delay:} Loops the program a set amount of times (two hundred thousand times as default) in a simple decrement loop as to simulate a waiting function. This is the single bigger source of issue in this game since it is not even native (i.e. can be run-dependent depending on \texttt{MARS}'s initial stat). The counter is well highlighted in the code, and can be easily changed. Although undesired, this issue does mean that there is less code complexity. Reason for not using a clock for this action is for lack of suitable options found (although one certainly existing). Function does not exist in base game, disadvantages can be ignored.
+\par\texttt{update\_score:} This function takes the stored score value, adds 5 and manages any carry over to the decimal place. Includes a redundant function for "initiating" the decimal numbers. Avoids start string of having two zeros (\texttt{00}). 
+\par\texttt{game\_over and game\_won:} These manage termination.\texttt{game\_over} prints a new screen (enters a newline repetitively), the current score and terminates, while \texttt{game\_won} updates score to a hundred and then calls \texttt{game\_over}.
+\par Supporting functions as \texttt{create\_reward}, \texttt{init\_buffers}, \texttt{wait\_transmitter}, and \texttt{print\_string} provide the capability for essential low level operations such as, creating a valid \texttt{R}, managing memory and printing.\\
+\\
+\textbf{Design Justifications and Challenges}\\
+A primary design decision was to use a string for the grid and changing that directly in an initialized space. This was greatly beneficial due to the players position being easily replaced, and the string to be changed with the same stored value as the stored position values since they both are index based (created with help from \textcite{noauthor_undated-eh}).
+\par Most challenging design choice was the memory mapped input and output. Due to this, clearing the display was not coded cleanly and leads to a noticeable shift upwards on slow-running machines when updating the grid due to the repeated printing of newlines. The ladder is another cause of time inefficiency raised by the lack of display clearing.
+\par The busy–wait delay loop, although imprecise and not consistent (even in the same system), still impresses in simplicity. Due to the program not waiting for the input and grabbing the last value in the keyboard register regardless, input response time is not affected.
+\par Score conversion was another critical area. Early implementations of it resulted in misprints of the decimal number and wrong ASCII conversion. With help of ASCII tables \parencite{wiki:xxx} and robust logic, this issue has been overcome.\\
+\\
+\textbf{Conclusion}\\
+The design of this game is concise. A lot has been put into making the code more streamlined, and it reflects so when playing. Although certain aspects leave a lot on the table (such as the display not clearing and the time delay being a loop), its modular structure allows for extensions, modifications and a greater readability.
+\par Further implementation detail can be found in the form of single line comments.
+
+\printbibliography
+
+\end{document}
