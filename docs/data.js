@@ -48,6 +48,26 @@ const DIPLOMAS = [
 //           the LaTeX tab / download. Loaded at runtime by the viewer.
 const PAPERS = [
   {
+    id: 'scc200-design',
+    title: 'Arcade Racing Game — Design Report',
+    category: 'University',
+    meta: 'LZSCC.200 · Group Project · 2026',
+    tags: ['Python', 'Pygame', 'Game design', 'SDLC'],
+    summary: 'Group design report for a 2D arcade-style car racing game in Python/Pygame, covering the full software development life cycle.',
+    pdf: 'uploads/papers/scc200-design-report.pdf',
+    tex: 'uploads/papers/scc200-design-report.tex',
+  },
+  {
+    id: 'scc131-mars',
+    title: 'MARS Grid Game — MIPS Assembly',
+    category: 'University',
+    meta: 'LZSCC.131 · Digital Systems · 2025',
+    tags: ['MIPS Assembly', 'MARS', 'Low-level'],
+    summary: 'Documentation for a grid-based game built in MIPS assembly on the MARS simulator, with a diagram of the code’s control flow.',
+    pdf: 'uploads/papers/scc131-mars-game.pdf',
+    tex: 'uploads/papers/scc131-mars-game.tex',
+  },
+  {
     id: 'physics-ee',
     title: 'Precession of a Bicycle Wheel',
     category: 'IB Diploma',
@@ -86,25 +106,5 @@ const PAPERS = [
     summary: 'A graphical generalisation of the Monty Hall problem to an arbitrary number of doors, prizes and reveals, grounded in conditional probability.',
     pdf: 'uploads/papers/math-ia.pdf',
     tex: 'uploads/papers/math-ia.tex',
-  },
-  {
-    id: 'scc200-design',
-    title: 'Arcade Racing Game — Design Report',
-    category: 'University',
-    meta: 'LZSCC.200 · Group Project · 2026',
-    tags: ['Python', 'Pygame', 'Game design', 'SDLC'],
-    summary: 'Group design report for a 2D arcade-style car racing game in Python/Pygame, covering the full software development life cycle.',
-    pdf: 'uploads/papers/scc200-design-report.pdf',
-    tex: 'uploads/papers/scc200-design-report.tex',
-  },
-  {
-    id: 'scc131-mars',
-    title: 'MARS Grid Game — MIPS Assembly',
-    category: 'University',
-    meta: 'LZSCC.131 · Digital Systems · 2025',
-    tags: ['MIPS Assembly', 'MARS', 'Low-level'],
-    summary: 'Documentation for a grid-based game built in MIPS assembly on the MARS simulator, with a diagram of the code’s control flow.',
-    pdf: 'uploads/papers/scc131-mars-game.pdf',
-    tex: 'uploads/papers/scc131-mars-game.tex',
   },
 ];
