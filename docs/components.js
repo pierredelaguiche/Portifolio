@@ -1,6 +1,22 @@
 // Reusable UI building blocks. You shouldn't need to touch this file for
 // content changes — see data.js for that.
 
+// Tracks whether the viewport is at or below a breakpoint. Used to switch
+// multi-column layouts to single-column and to swap the nav for a menu.
+function useIsMobile(breakpoint = 760) {
+  const query = '(max-width: ' + breakpoint + 'px)';
+  const get = () => typeof window !== 'undefined' && window.matchMedia(query).matches;
+  const [isMobile, setIsMobile] = React.useState(get);
+  React.useEffect(() => {
+    const mql = window.matchMedia(query);
+    const on = (e) => setIsMobile(e.matches);
+    setIsMobile(mql.matches);
+    mql.addEventListener ? mql.addEventListener('change', on) : mql.addListener(on);
+    return () => { mql.removeEventListener ? mql.removeEventListener('change', on) : mql.removeListener(on); };
+  }, [query]);
+  return isMobile;
+}
+
 function Button({ children, variant = 'primary', size = 'md', glyph, disabled = false, href, onClick }) {
   const base = {
     fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-md)', letterSpacing: 'var(--tracking-wide)',
@@ -60,6 +76,51 @@ function Tag({ children, variant = 'outline' }) {
 }
 
 function NavBar({ items = [], activeHref, ctaLabel, ctaHref }) {
+  const isMobile = useIsMobile();
+  const [open, setOpen] = React.useState(false);
+
+  const logo = React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 22, color: 'var(--cream)', letterSpacing: '-0.02em' } }, 'PdL');
+  const linkStyle = (active, size) => ({
+    color: active ? 'var(--lime)' : 'var(--cream)', textDecoration: 'none',
+    fontSize: size || 'var(--text-pixel-md)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)',
+  });
+  const ctaStyle = {
+    fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', color: 'var(--lime-ink)',
+    background: 'var(--lime)', padding: '6px 14px', textDecoration: 'none', border: 'var(--border-thick) solid var(--ink)',
+  };
+
+  if (isMobile) {
+    return React.createElement('nav', {
+      style: {
+        position: 'sticky', top: 0, zIndex: 40,
+        padding: '16px var(--page-margin)', borderBottom: 'var(--border-thick) solid var(--ink)',
+        background: 'var(--void)', fontFamily: 'var(--font-pixel)',
+      },
+    },
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' } },
+        logo,
+        React.createElement('button', {
+          onClick: () => setOpen((o) => !o),
+          'aria-label': open ? 'Close menu' : 'Open menu',
+          style: {
+            fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-lg)', lineHeight: 1,
+            background: 'var(--lime)', color: 'var(--lime-ink)', border: 'var(--border-thick) solid var(--ink)',
+            padding: '2px 14px', cursor: 'pointer',
+          },
+        }, open ? '×' : '≡')),
+      open ? React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 18, marginTop: 20 } },
+        items.map((it) => React.createElement('a', {
+          key: it.href, href: it.href, onClick: () => setOpen(false),
+          style: linkStyle(it.href === activeHref, 'var(--text-pixel-lg)'),
+        }, it.href === activeHref ? '▸ ' : '', it.label)),
+        ctaLabel ? React.createElement('a', {
+          key: 'cta', href: ctaHref || '#', onClick: () => setOpen(false),
+          style: { ...ctaStyle, textAlign: 'center', padding: '10px 14px' },
+        }, ctaLabel) : null,
+      ) : null,
+    );
+  }
+
   return React.createElement('nav', {
     style: {
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -67,24 +128,15 @@ function NavBar({ items = [], activeHref, ctaLabel, ctaHref }) {
       background: 'var(--void)', fontFamily: 'var(--font-pixel)',
     },
   },
-    React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 22, color: 'var(--cream)', letterSpacing: '-0.02em' } }, 'PdL'),
+    logo,
     React.createElement('div', { style: { display: 'flex', gap: 28 } },
       items.map((it) => React.createElement('a', {
         key: it.href,
         href: it.href,
-        style: {
-          color: it.href === activeHref ? 'var(--lime)' : 'var(--cream)', textDecoration: 'none',
-          fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)',
-        },
+        style: linkStyle(it.href === activeHref),
       }, it.href === activeHref ? '▸ ' : '', it.label))),
     ctaLabel
-      ? React.createElement('a', {
-        href: ctaHref || '#',
-        style: {
-          fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', color: 'var(--lime-ink)',
-          background: 'var(--lime)', padding: '6px 14px', textDecoration: 'none', border: 'var(--border-thick) solid var(--ink)',
-        },
-      }, ctaLabel)
+      ? React.createElement('a', { href: ctaHref || '#', style: ctaStyle }, ctaLabel)
       : React.createElement('span', null),
   );
 }

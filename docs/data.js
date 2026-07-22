@@ -29,7 +29,6 @@ const EXPERIENCE = [
   { org: 'ETEX', role: 'Data Science & Automation Intern', place: 'Brussels, Belgium', when: '07.2026 – 09.2026', note: 'Three-month internship focused on data science and process automation.' },
   { org: 'Schülerhilfe', role: 'Student Tutor', place: 'Leipzig, Germany', when: '09.2025 – 06.2026', note: 'Taught Mathematics, Physics and English in-person.' },
   { org: 'Independent Projects', role: 'CS50 + 30 Days of Python', place: 'Leipzig, Germany', when: '06.2024 – 08.2024', note: 'Prepared for university by building fluency across languages; code at github.com/pierredelaguiche.' },
-  { org: 'Saint-Charles International School', role: 'Student', place: 'Porrentruy, Switzerland', when: '06.2022 – 06.2024', note: 'High-level Mathematics and Physics; Extended Essay on bicycle mechanics and precession.' },
 ];
 
 const EDUCATION = [

@@ -2,11 +2,12 @@
 // components.js and the content in data.js.
 
 function Hero() {
+  const isMobile = useIsMobile();
   return React.createElement('section', {
     id: 'hero',
     style: {
-      minHeight: '92vh', display: 'flex', flexDirection: 'column', justifyContent: 'center',
-      padding: '0 var(--page-margin)', borderBottom: '2px solid var(--ink)', position: 'relative',
+      minHeight: isMobile ? '82vh' : '92vh', display: 'flex', flexDirection: 'column', justifyContent: 'center',
+      padding: isMobile ? '56px var(--page-margin)' : '0 var(--page-margin)', borderBottom: '2px solid var(--ink)', position: 'relative',
     },
   },
     React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', marginBottom: 16 } }, '*Mode: Portfolio'),
@@ -21,11 +22,12 @@ function Hero() {
 }
 
 function About() {
+  const isMobile = useIsMobile();
   const [langMode, setLangMode] = React.useState('natural');
   const languages = langMode === 'natural' ? NATURAL_LANGUAGES : PROGRAMMING_LANGUAGES;
   return React.createElement('section', {
     id: 'about',
-    style: { padding: '96px var(--page-margin)', borderBottom: '2px solid var(--ink)', display: 'grid', gridTemplateColumns: 'minmax(0,1.1fr) minmax(0,0.9fr)', gap: 64 },
+    style: { padding: isMobile ? '64px var(--page-margin)' : '96px var(--page-margin)', borderBottom: '2px solid var(--ink)', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0,1.1fr) minmax(0,0.9fr)', gap: isMobile ? 40 : 64 },
   },
     React.createElement('div', null,
       React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '01 / About'),
@@ -58,21 +60,25 @@ function About() {
 }
 
 function ExperienceTimeline() {
+  const isMobile = useIsMobile();
   const row = (r) => React.createElement('div', {
     key: r.org + r.when,
-    style: { display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: 16, padding: '14px 0', borderBottom: '1px solid var(--border-hairline)', fontFamily: 'var(--font-body)', alignItems: 'baseline' },
+    style: isMobile
+      ? { display: 'flex', flexDirection: 'column', gap: 6, padding: '14px 0', borderBottom: '1px solid var(--border-hairline)', fontFamily: 'var(--font-body)' }
+      : { display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: 16, padding: '14px 0', borderBottom: '1px solid var(--border-hairline)', fontFamily: 'var(--font-body)', alignItems: 'baseline' },
   },
+    isMobile ? React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)' } }, r.when) : null,
     React.createElement('div', null,
       React.createElement('div', { style: { color: 'var(--cream)', fontWeight: 600 } }, r.role),
       React.createElement('div', { style: { color: 'var(--text-muted)', fontSize: 'var(--text-body-sm)' } }, r.org + (r.place ? ' · ' + r.place : ''))),
     React.createElement('div', { style: { color: 'var(--text-muted)', fontSize: 'var(--text-body-sm)', lineHeight: 'var(--lh-normal)' } }, r.note || ''),
-    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', whiteSpace: 'nowrap' } }, r.when),
+    isMobile ? null : React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', whiteSpace: 'nowrap' } }, r.when),
   );
-  return React.createElement('section', { id: 'cv', style: { padding: '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
+  return React.createElement('section', { id: 'cv', style: { padding: isMobile ? '64px var(--page-margin)' : '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
     React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '02 / CV'),
     React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-md)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 32px' } }, 'Experience'),
     React.createElement(PixelPanel, { label: 'Save Data', variant: 'terminal' }, EXPERIENCE.map(row)),
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 24 } },
+    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 24, marginTop: 24 } },
       React.createElement(PixelPanel, { label: 'Education' }, EDUCATION.map(row)),
       React.createElement(PixelPanel, { label: 'Diplomas' }, DIPLOMAS.map(row))),
   );
@@ -110,15 +116,16 @@ function PaperCard({ paper, onSelect }) {
 }
 
 function PapersSection({ onSelect }) {
+  const isMobile = useIsMobile();
   const categories = [];
   PAPERS.forEach((p) => { if (!categories.includes(p.category)) categories.push(p.category); });
-  return React.createElement('section', { id: 'papers', style: { padding: '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
+  return React.createElement('section', { id: 'papers', style: { padding: isMobile ? '64px var(--page-margin)' : '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
     React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '03 / Papers'),
     React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-md)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 12px' } }, 'Papers'),
     React.createElement('p', { style: { fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-muted)', maxWidth: '60ch', margin: '0 0 40px', lineHeight: 'var(--lh-normal)' } }, 'Selected written work — IB assessments and university coursework, all written in LaTeX. View each as a PDF in the browser or download the LaTeX source.'),
     categories.map((cat) => React.createElement('div', { key: cat, style: { marginBottom: 40 } },
       React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)', marginBottom: 16, borderBottom: '1px solid var(--border-hairline)', paddingBottom: 8 } }, '* ' + cat),
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 20 } },
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,minmax(0,1fr))', gap: 20 } },
         PAPERS.filter((p) => p.category === cat).map((p) => React.createElement(PaperCard, { key: p.id, paper: p, onSelect }))))),
   );
 }
@@ -128,6 +135,7 @@ function texBasename(path) {
 }
 
 function PaperViewer({ paper, initialTab, onClose }) {
+  const isMobile = useIsMobile();
   const [tab, setTab] = React.useState(initialTab || 'pdf');
   const [texVal, setTexVal] = React.useState('');
   const [status, setStatus] = React.useState('idle'); // idle | loading | ok | error
@@ -195,29 +203,31 @@ function PaperViewer({ paper, initialTab, onClose }) {
           }, 'Download .tex'))
     : null;
 
+  const px = isMobile ? 16 : 24;
   return React.createElement('div', {
     onClick: onClose,
-    style: { position: 'fixed', inset: 0, background: 'rgba(11,13,16,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: 24 },
+    style: { position: 'fixed', inset: 0, background: 'rgba(11,13,16,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: isMobile ? 10 : 24 },
   },
-    React.createElement('div', { onClick: (e) => e.stopPropagation(), style: { background: 'var(--void-2)', border: '2px solid var(--ink)', boxShadow: 'var(--shadow-hard-lg)', maxWidth: 900, width: '100%', display: 'flex', flexDirection: 'column', maxHeight: '92vh' } },
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 18px', borderBottom: '1px solid var(--steel-darker)', fontFamily: 'var(--font-pixel)', color: 'var(--lime)', textTransform: 'uppercase' } },
+    React.createElement('div', { onClick: (e) => e.stopPropagation(), style: { background: 'var(--void-2)', border: '2px solid var(--ink)', boxShadow: 'var(--shadow-hard-lg)', maxWidth: 900, width: '100%', display: 'flex', flexDirection: 'column', maxHeight: isMobile ? '94vh' : '92vh' } },
+      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px ' + px + 'px', borderBottom: '1px solid var(--steel-darker)', fontFamily: 'var(--font-pixel)', color: 'var(--lime)', textTransform: 'uppercase' } },
         React.createElement('span', null, '*Paper'),
         React.createElement('span', { onClick: onClose, style: { cursor: 'pointer', color: 'var(--cream)' } }, '× close')),
-      React.createElement('div', { style: { padding: '20px 24px 0' } },
-        React.createElement('h3', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 26, textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 4px' } }, paper.title),
+      React.createElement('div', { style: { padding: '20px ' + px + 'px 0' } },
+        React.createElement('h3', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: isMobile ? 21 : 26, textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 4px', lineHeight: 'var(--lh-snug)' } }, paper.title),
         React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--text-muted)', fontSize: 'var(--text-pixel-sm)', marginBottom: 16 } }, paper.meta)),
-      React.createElement('div', { style: { display: 'flex', gap: 8, padding: '0 24px 16px' } },
+      React.createElement('div', { style: { display: 'flex', gap: 8, padding: '0 ' + px + 'px 16px' } },
         tabButton('pdf', 'PDF'),
         tabButton('latex', 'LaTeX')),
-      React.createElement('div', { style: { padding: '0 24px', flexGrow: 1, minHeight: 0 } }, body),
-      React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap', padding: '18px 24px 24px' } },
+      React.createElement('div', { style: { padding: '0 ' + px + 'px', flexGrow: 1, minHeight: 0 } }, body),
+      React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap', padding: '18px ' + px + 'px 24px' } },
         React.createElement(Button, { variant: 'primary', glyph: '↗', href: paper.pdf }, 'Open PDF'),
         downloadTex)),
   );
 }
 
 function Contact() {
-  return React.createElement('section', { id: 'contact', style: { padding: '96px var(--page-margin)', textAlign: 'left' } },
+  const isMobile = useIsMobile();
+  return React.createElement('section', { id: 'contact', style: { padding: isMobile ? '64px var(--page-margin)' : '96px var(--page-margin)', textAlign: 'left' } },
     React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '04 / Contact'),
     React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-lg)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 32px', lineHeight: 'var(--lh-tight)', maxWidth: '16ch' } }, 'Let’s talk'),
     React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap' } },
