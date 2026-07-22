@@ -86,3 +86,37 @@ a {
 a:hover {
   color: var(--cream);
 }
+
+/* LaTeX source editor inside the paper viewer */
+.tex-editor {
+  width: 100%;
+  height: 58vh;
+  resize: none;
+  border: var(--border-thick) solid var(--ink);
+  background: var(--void);
+  color: var(--cream);
+  font-family: var(--font-pixel);
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 14px 16px;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 2;
+}
+.tex-editor:focus {
+  outline: 2px solid var(--lime);
+  outline-offset: -2px;
+}
+.tex-empty {
+  height: 58vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: var(--border-thick) dashed var(--steel-darker);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  padding: 24px;
+  line-height: var(--lh-normal);
+}

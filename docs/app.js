@@ -13,7 +13,7 @@ function Hero() {
     React.createElement('h1', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-xl)', lineHeight: 'var(--lh-tight)', textTransform: 'uppercase', color: 'var(--cream)', letterSpacing: 'var(--tracking-tight)', margin: 0, maxWidth: '20ch' } }, 'Pierre de Laguiche'),
     React.createElement('p', { style: { fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--text-muted)', maxWidth: '52ch', marginTop: 28, lineHeight: 'var(--lh-normal)' } }, 'Computer science student at Lancaster University, physics-minded, working toward quantum machine learning.'),
     React.createElement('div', { style: { display: 'flex', gap: 16, marginTop: 40, flexWrap: 'wrap' } },
-      React.createElement(Button, { variant: 'primary', glyph: '▸', href: '#work' }, 'View Work'),
+      React.createElement(Button, { variant: 'primary', glyph: '▸', href: '#papers' }, 'View Papers'),
       React.createElement(Button, { variant: 'ghost', href: 'uploads/CV_Jun_26_English.pdf' }, 'Download CV'),
       React.createElement(Tag, { variant: 'status' }, 'Open to internships'),
     ),
@@ -78,20 +78,14 @@ function ExperienceTimeline() {
   );
 }
 
-function ProjectsGrid({ onSelect }) {
-  return React.createElement('section', { id: 'work', style: { padding: '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
-    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '03 / Work'),
-    React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-md)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 32px' } }, 'Projects'),
-    React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: 20 } },
-      PROJECTS.map((p, i) => React.createElement('div', { key: p.id, onClick: () => onSelect(p), style: { cursor: 'pointer' } },
-        React.createElement(Card, { index: i + 1, title: p.title, meta: p.meta, tags: p.tags }, p.summary)))),
-  );
-}
-
 function PaperCard({ paper, onSelect }) {
   const [hover, setHover] = React.useState(false);
+  const action = (label, tab) => React.createElement('span', {
+    onClick: (e) => { e.stopPropagation(); onSelect(paper, tab); },
+    style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-sm)', color: 'var(--lime)', textTransform: 'uppercase', cursor: 'pointer' },
+  }, label);
   return React.createElement('div', {
-    onClick: () => onSelect(paper),
+    onClick: () => onSelect(paper, 'pdf'),
     onMouseEnter: () => setHover(true),
     onMouseLeave: () => setHover(false),
     style: {
@@ -109,7 +103,9 @@ function PaperCard({ paper, onSelect }) {
         key: t,
         style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-sm)', border: 'var(--border-thin) solid var(--border-hairline)', padding: '2px 8px', textTransform: 'uppercase' },
       }, t))),
-    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-sm)', color: 'var(--lime)', textTransform: 'uppercase', marginTop: 16 } }, '▸ Read paper'),
+    React.createElement('div', { style: { display: 'flex', gap: 18, marginTop: 16 } },
+      action('▸ Read paper', 'pdf'),
+      action('▸ View LaTeX', 'latex')),
   );
 }
 
@@ -117,7 +113,7 @@ function PapersSection({ onSelect }) {
   const categories = [];
   PAPERS.forEach((p) => { if (!categories.includes(p.category)) categories.push(p.category); });
   return React.createElement('section', { id: 'papers', style: { padding: '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
-    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '04 / Papers'),
+    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '03 / Papers'),
     React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-md)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 12px' } }, 'Papers'),
     React.createElement('p', { style: { fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-md)', color: 'var(--text-muted)', maxWidth: '60ch', margin: '0 0 40px', lineHeight: 'var(--lh-normal)' } }, 'Selected written work — IB assessments and university coursework, all written in LaTeX. View each as a PDF in the browser or download the LaTeX source.'),
     categories.map((cat) => React.createElement('div', { key: cat, style: { marginBottom: 40 } },
@@ -127,8 +123,78 @@ function PapersSection({ onSelect }) {
   );
 }
 
-function PaperViewer({ paper, onClose }) {
+function texBasename(path) {
+  return (path || '').split('/').pop() || 'source.tex';
+}
+
+function PaperViewer({ paper, initialTab, onClose }) {
+  const [tab, setTab] = React.useState(initialTab || 'pdf');
+  const [texVal, setTexVal] = React.useState('');
+  const [status, setStatus] = React.useState('idle'); // idle | loading | ok | error
+  const hasSource = !!(paper && paper.tex);
+
+  React.useEffect(() => {
+    if (!paper || !paper.tex) return;
+    let alive = true;
+    setStatus('loading');
+    fetch(paper.tex)
+      .then((r) => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then((t) => { if (alive) { setTexVal(t); setStatus('ok'); } })
+      .catch(() => { if (alive) setStatus('error'); });
+    return () => { alive = false; };
+  }, [paper && paper.tex]);
+
   if (!paper) return null;
+
+  const downloadEdited = () => {
+    const blob = new Blob([texVal], { type: 'text/x-tex' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = texBasename(paper.tex);
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const tabButton = (id, label) => React.createElement('button', {
+    key: id,
+    onClick: () => setTab(id),
+    style: {
+      fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-sm)', textTransform: 'uppercase',
+      padding: '8px 16px', cursor: 'pointer', border: '2px solid var(--ink)',
+      background: tab === id ? 'var(--lime)' : 'var(--void-2)',
+      color: tab === id ? 'var(--ink)' : 'var(--cream)',
+      boxShadow: tab === id ? 'none' : '3px 3px 0 var(--ink)',
+      transform: tab === id ? 'translate(3px,3px)' : 'none',
+    },
+  }, label);
+
+  let latexPane;
+  if (!hasSource) {
+    latexPane = React.createElement('div', { className: 'tex-empty' }, 'LaTeX source for this paper hasn’t been added yet.');
+  } else if (status === 'ok') {
+    latexPane = React.createElement('textarea', { className: 'tex-editor', spellCheck: false, value: texVal, onChange: (e) => setTexVal(e.target.value) });
+  } else if (status === 'error') {
+    latexPane = React.createElement('div', { className: 'tex-empty' }, 'The source can’t be previewed inline here (browsers block this when opening the page directly from a file). Use “Download .tex” below, or view it on the published site.');
+  } else {
+    latexPane = React.createElement('div', { className: 'tex-empty' }, 'Loading source…');
+  }
+
+  const body = tab === 'pdf'
+    ? React.createElement('iframe', { src: paper.pdf, title: paper.title, style: { width: '100%', height: '58vh', border: '2px solid var(--ink)', background: 'var(--cream)' } })
+    : latexPane;
+
+  const downloadTex = hasSource
+    ? (status === 'ok'
+        ? React.createElement('button', {
+            onClick: downloadEdited,
+            style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-md)', letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 20px', border: 'var(--border-thin) solid var(--border-hairline)', background: 'transparent', color: 'var(--cream)', cursor: 'pointer' },
+          }, 'Download .tex')
+        : React.createElement('a', {
+            href: paper.tex, download: texBasename(paper.tex),
+            style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-md)', letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 20px', border: 'var(--border-thin) solid var(--border-hairline)', color: 'var(--cream)', textDecoration: 'none' },
+          }, 'Download .tex'))
+    : null;
+
   return React.createElement('div', {
     onClick: onClose,
     style: { position: 'fixed', inset: 0, background: 'rgba(11,13,16,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: 24 },
@@ -140,20 +206,19 @@ function PaperViewer({ paper, onClose }) {
       React.createElement('div', { style: { padding: '20px 24px 0' } },
         React.createElement('h3', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 26, textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 4px' } }, paper.title),
         React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--text-muted)', fontSize: 'var(--text-pixel-sm)', marginBottom: 16 } }, paper.meta)),
-      React.createElement('div', { style: { padding: '0 24px', flexGrow: 1, minHeight: 0 } },
-        React.createElement('iframe', { src: paper.pdf, title: paper.title, style: { width: '100%', height: '58vh', border: '2px solid var(--ink)', background: 'var(--cream)' } })),
+      React.createElement('div', { style: { display: 'flex', gap: 8, padding: '0 24px 16px' } },
+        tabButton('pdf', 'PDF'),
+        tabButton('latex', 'LaTeX')),
+      React.createElement('div', { style: { padding: '0 24px', flexGrow: 1, minHeight: 0 } }, body),
       React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap', padding: '18px 24px 24px' } },
         React.createElement(Button, { variant: 'primary', glyph: '↗', href: paper.pdf }, 'Open PDF'),
-        paper.tex ? React.createElement('a', {
-          href: paper.tex, download: true,
-          style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-md)', letterSpacing: 'var(--tracking-wide)', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: 10, padding: '10px 20px', border: 'var(--border-thin) solid var(--border-hairline)', color: 'var(--cream)', textDecoration: 'none' },
-        }, 'Download .tex') : null)),
+        downloadTex)),
   );
 }
 
 function Contact() {
   return React.createElement('section', { id: 'contact', style: { padding: '96px var(--page-margin)', textAlign: 'left' } },
-    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '05 / Contact'),
+    React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '04 / Contact'),
     React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-lg)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 32px', lineHeight: 'var(--lh-tight)', maxWidth: '16ch' } }, 'Let’s talk'),
     React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap' } },
       React.createElement(Button, { variant: 'primary', glyph: '▸', href: 'mailto:pierre.delaguiche@gmail.com' }, 'pierre.delaguiche@gmail.com'),
@@ -163,40 +228,23 @@ function Contact() {
   );
 }
 
-function ProjectDetail({ project, onClose }) {
-  if (!project) return null;
-  return React.createElement('div', {
-    onClick: onClose,
-    style: { position: 'fixed', inset: 0, background: 'rgba(11,13,16,0.86)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, padding: 24 },
-  },
-    React.createElement('div', { onClick: (e) => e.stopPropagation(), style: { background: 'var(--void-2)', border: '2px solid var(--ink)', boxShadow: 'var(--shadow-hard-lg)', maxWidth: 640, width: '100%' } },
-      React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 18px', borderBottom: '1px solid var(--steel-darker)', fontFamily: 'var(--font-pixel)', color: 'var(--lime)', textTransform: 'uppercase' } },
-        React.createElement('span', null, '*Project'),
-        React.createElement('span', { onClick: onClose, style: { cursor: 'pointer', color: 'var(--cream)' } }, '× close')),
-      React.createElement('div', { style: { padding: 32 } },
-        React.createElement('h3', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 32, textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 8px' } }, project.title),
-        React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--text-muted)', marginBottom: 20 } }, project.meta),
-        React.createElement('p', { style: { fontFamily: 'var(--font-body)', color: 'var(--text-muted)', lineHeight: 'var(--lh-normal)', fontSize: 'var(--text-body-md)' } }, project.detail),
-        React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 20 } },
-          project.tags.map((t) => React.createElement(Tag, { key: t }, t))))),
-  );
-}
-
 function App() {
   const [active, setActive] = React.useState('#hero');
-  const [selected, setSelected] = React.useState(null);
-  const [paper, setPaper] = React.useState(null);
+  const [sel, setSel] = React.useState(null); // { paper, tab }
   return React.createElement(React.Fragment, null,
     React.createElement(NavBar, { items: NAV_ITEMS, activeHref: active, ctaLabel: 'Resume', ctaHref: 'uploads/CV_Jun_26_English.pdf' }),
     React.createElement('div', { onClickCapture: (e) => { const a = e.target.closest('a[href^="#"]'); if (a) setActive(a.getAttribute('href')); } },
       React.createElement(Hero),
       React.createElement(About),
       React.createElement(ExperienceTimeline),
-      React.createElement(ProjectsGrid, { onSelect: setSelected }),
-      React.createElement(PapersSection, { onSelect: setPaper }),
+      React.createElement(PapersSection, { onSelect: (paper, tab) => setSel({ paper: paper, tab: tab || 'pdf' }) }),
       React.createElement(Contact)),
-    React.createElement(ProjectDetail, { project: selected, onClose: () => setSelected(null) }),
-    React.createElement(PaperViewer, { paper: paper, onClose: () => setPaper(null) }),
+    React.createElement(PaperViewer, {
+      key: sel ? sel.paper.id + ':' + sel.tab : 'none',
+      paper: sel ? sel.paper : null,
+      initialTab: sel ? sel.tab : 'pdf',
+      onClose: () => setSel(null),
+    }),
   );
 }
 
