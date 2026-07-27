@@ -74,12 +74,24 @@ function ExperienceTimeline() {
     React.createElement('div', { style: { color: 'var(--text-muted)', fontSize: 'var(--text-body-sm)', lineHeight: 'var(--lh-normal)' } }, r.note || ''),
     isMobile ? null : React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', whiteSpace: 'nowrap' } }, r.when),
   );
+  // Education rows: institution on top, role/diploma detail below it, location bottom-right.
+  const eduRow = (r) => React.createElement('div', {
+    key: r.org + r.when,
+    style: { padding: '16px 0', borderBottom: '1px solid var(--border-hairline)' },
+  },
+    React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' } },
+      React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 20, textTransform: 'uppercase', color: 'var(--cream)', lineHeight: 'var(--lh-snug)' } }, r.org),
+      React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', whiteSpace: 'nowrap' } }, r.when)),
+    React.createElement('div', { style: { fontFamily: 'var(--font-body)', color: 'var(--text-muted)', fontSize: 'var(--text-body-sm)', marginTop: 6, lineHeight: 'var(--lh-normal)' } }, r.role),
+    React.createElement('div', { style: { display: 'flex', justifyContent: 'flex-end', marginTop: 10 } },
+      React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--steel)', fontSize: 'var(--text-pixel-sm)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)' } }, r.place)),
+  );
   return React.createElement('section', { id: 'cv', style: { padding: isMobile ? '64px var(--page-margin)' : '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
     React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '02 / CV'),
     React.createElement('h2', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-display-md)', textTransform: 'uppercase', color: 'var(--cream)', margin: '0 0 32px' } }, 'Experience'),
     React.createElement(PixelPanel, { label: 'Save Data', variant: 'terminal' }, EXPERIENCE.map(row)),
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 24, marginTop: 24 } },
-      React.createElement(PixelPanel, { label: 'Education' }, EDUCATION.map(row)),
+      React.createElement(PixelPanel, { label: 'Education' }, EDUCATION.map(eduRow)),
       React.createElement(PixelPanel, { label: 'Diplomas' }, DIPLOMAS.map(row))),
   );
 }
