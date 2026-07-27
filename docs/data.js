@@ -21,24 +21,34 @@ const PROGRAMMING_LANGUAGES = [
   ['C', 'Systems'],
   ['Java', 'Coursework'],
   ['MARS Assembly', 'Low-level'],
+  ['Haskell', 'Functional'],
   ['LaTeX', 'Reports & essays'],
-  ['Haskell', 'Learning'],
+  ['Databricks', 'Data platform'],
+  ['Azure', 'Cloud'],
+  ['Git / GitHub', 'Version control'],
 ];
 
 const EXPERIENCE = [
-  { org: 'ETEX', role: 'Data Science & Automation Intern', place: 'Brussels, Belgium', when: '07.2026 – 09.2026', note: 'Three-month internship focused on data science and process automation.' },
-  { org: 'Schülerhilfe', role: 'Student Tutor', place: 'Leipzig, Germany', when: '09.2025 – 06.2026', note: 'Taught Mathematics, Physics and English in-person.' },
+  { org: 'ETEX', role: 'Data Science & Automation Intern', place: 'Brussels, Belgium', when: '07.2026 – 09.2026', note: 'Three-month internship focused on data science and process automation, working in Databricks and Azure.' },
+  { org: 'Schülerhilfe', role: 'Student Tutor for the Abitur', place: 'Leipzig, Germany', when: '09.2025 – 06.2026', note: 'Taught Mathematics, Physics and English in-person.' },
   { org: 'Independent Projects', role: 'CS50 + 30 Days of Python', place: 'Leipzig, Germany', when: '06.2024 – 08.2024', note: 'Prepared for university by building fluency across languages; code at github.com/pierredelaguiche.' },
+  { org: 'Saint-Charles International School', role: 'Student', place: 'Porrentruy, Switzerland', when: '06.2022 – 06.2024', note: 'High-level Mathematics and Physics; Extended Essay on bicycle mechanics and precession.' },
 ];
 
 const EDUCATION = [
-  { org: 'Lancaster University', role: 'BSc Computer Science (Hons)', when: '10.2024 – Present' },
-  { org: 'Saint-Charles International School', role: 'IB Diploma', when: '08.2022 – 06.2024' },
+  { org: 'Lancaster University', role: 'BSc Computer Science (Hons)', place: 'Leipzig campus', when: '10.2024 – Present' },
+  { org: 'Saint-Charles International School', role: 'IB Diploma', place: 'Porrentruy, Switzerland', when: '08.2022 – 06.2024' },
 ];
 
 const DIPLOMAS = [
   { org: 'TOEFL iBT', role: 'English Language Certificate — 98 (C1+)', when: '2024' },
   { org: 'Goethe-Zertifikat C1', role: 'German Language Certificate', when: '2026' },
+];
+
+const EXTRA_CURRICULAR = [
+  { org: 'Leipzig University', role: 'Guest Auditor — Physics', place: 'Leipzig, Germany', when: '2024 – 2025', note: 'Attended lectures and seminars of the Physics course alongside the CS degree.' },
+  { org: 'Model United Nations', role: 'Committee Member', place: 'Various', when: '2017 – 2024', note: 'Debating club across several schools; took part in conferences and debates.' },
+  { org: 'Volunteering', role: 'Retirement Home Helper', place: 'Porrentruy, Switzerland', when: '08.2023 – 08.2024', note: 'Retirement home support and event assistance.' },
 ];
 
 // Written works — IB assessments and university coursework, written in LaTeX.
