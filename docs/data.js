@@ -35,8 +35,21 @@ const EXPERIENCE = [
 ];
 
 const EDUCATION = [
-  { org: 'Lancaster University', role: 'BSc Computer Science (Hons)', place: 'Leipzig campus', when: '10.2024 – Present' },
-  { org: 'Saint-Charles International School', role: 'HL:\n Math AA, Physics, English\nSL:\n Chemistry, Economics, German', place: 'Porrentruy, Switzerland', when: '08.2022 – 06.2024' },
+  {
+    org: 'Lancaster University',
+    role: 'BSc Computer Science (Hons)',
+    place: 'Leipzig campus',
+    when: '10.2024 – Present'
+  },
+  {
+    org: 'Saint-Charles International School',
+    role: `HL:
+Math AA, Physics, English
+SL:
+Chemistry, Economics, German`,
+    place: 'Porrentruy, Switzerland',
+    when: '08.2022 – 06.2024'
+  },
 ];
 
 const DIPLOMAS = [
