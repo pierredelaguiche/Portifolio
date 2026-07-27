@@ -11,15 +11,15 @@ const NAV_ITEMS = [
 const NATURAL_LANGUAGES = [
   ['French', 'Native'],
   ['Portuguese', 'Native'],
-  ['English', 'Fluent · C1+'],
-  ['German', 'Fluent · C1'],
+  ['English', 'Fluent'],
+  ['German', 'Fluent'],
   ['Italian', 'Conversational'],
 ];
 
 const PROGRAMMING_LANGUAGES = [
-  ['Python', 'Daily driver'],
+  ['Python', 'Systems and OOP'],
   ['C', 'Systems'],
-  ['Java', 'Coursework'],
+  ['Java', 'OOP'],
   ['MARS Assembly', 'Low-level'],
   ['Haskell', 'Functional'],
   ['LaTeX', 'Reports & essays'],
@@ -30,14 +30,13 @@ const PROGRAMMING_LANGUAGES = [
 
 const EXPERIENCE = [
   { org: 'ETEX', role: 'Data Science & Automation Intern', place: 'Brussels, Belgium', when: '07.2026 – 09.2026', note: 'Three-month internship focused on data science and process automation, working in Databricks and Azure.' },
-  { org: 'Schülerhilfe', role: 'Student Tutor for the Abitur', place: 'Leipzig, Germany', when: '09.2025 – 06.2026', note: 'Taught Mathematics, Physics and English in-person.' },
-  { org: 'Independent Projects', role: 'CS50 + 30 Days of Python', place: 'Leipzig, Germany', when: '06.2024 – 08.2024', note: 'Prepared for university by building fluency across languages; code at github.com/pierredelaguiche.' },
-  { org: 'Saint-Charles International School', role: 'Student', place: 'Porrentruy, Switzerland', when: '06.2022 – 06.2024', note: 'High-level Mathematics and Physics; Extended Essay on bicycle mechanics and precession.' },
+  { org: 'Schülerhilfe', role: 'Tutor for the Abitur', place: 'Leipzig, Germany', when: '09.2025 – 06.2026', note: 'Taught Mathematics, Physics and English for the 12th grade german equivalent.' },
+  { org: 'Independent Projects', role: 'Various (CS50, 50 days of Python)', place: 'Leipzig, Germany', when: '06.2024 – Present', note: 'Prepared for university by building fluency across languages; code at github.com/pierredelaguiche.' },
 ];
 
 const EDUCATION = [
   { org: 'Lancaster University', role: 'BSc Computer Science (Hons)', place: 'Leipzig campus', when: '10.2024 – Present' },
-  { org: 'Saint-Charles International School', role: 'IB Diploma', place: 'Porrentruy, Switzerland', when: '08.2022 – 06.2024' },
+  { org: 'Saint-Charles International School', role: 'HL:\n Math AA, Physics, English\nSL:\n Chemistry, Economics, German', place: 'Porrentruy, Switzerland', when: '08.2022 – 06.2024' },
 ];
 
 const DIPLOMAS = [
