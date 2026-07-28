@@ -16,7 +16,7 @@ function Hero() {
     React.createElement('div', { style: { display: 'flex', gap: 16, marginTop: 40, flexWrap: 'wrap' } },
       React.createElement(Button, { variant: 'primary', glyph: '▸', href: '#papers' }, 'View Papers'),
       React.createElement(Button, { variant: 'ghost', href: 'uploads/CV_Jun_26_English.pdf' }, 'Download CV'),
-      React.createElement(Tag, { variant: 'status' }, 'Open to internships'),
+      React.createElement(Tag, { variant: 'status' }, 'Open to work'),
     ),
   );
 }
