@@ -82,7 +82,7 @@ function ExperienceTimeline() {
     React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' } },
       React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 20, textTransform: 'uppercase', color: 'var(--cream)', lineHeight: 'var(--lh-snug)' } }, r.org),
       React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', whiteSpace: 'nowrap' } }, r.when)),
-    React.createElement('div', { style: { fontFamily: 'var(--font-body)', color: 'var(--text-muted)', fontSize: 'var(--text-body-sm)', marginTop: 6, lineHeight: 'var(--lh-normal)' } }, r.role),
+    React.createElement('div', { style: { fontFamily: 'var(--font-body)', color: 'var(--text-muted)', fontSize: 'var(--text-body-sm)', marginTop: 6, lineHeight: 'var(--lh-normal)', whiteSpace: 'pre-line' } }, r.role),
     React.createElement('div', { style: { display: 'flex', justifyContent: 'flex-end', marginTop: 10 } },
       React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--steel)', fontSize: 'var(--text-pixel-sm)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)' } }, r.place)),
   );
