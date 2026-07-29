@@ -78,6 +78,21 @@ function Tag({ children, variant = 'outline' }) {
 function NavBar({ items = [], activeHref, ctaLabel, ctaHref }) {
   const isMobile = useIsMobile();
   const [open, setOpen] = React.useState(false);
+  const navRef = React.useRef(null);
+
+  // Publish the collapsed bar height as --nav-h so sections can offset their
+  // anchor scroll position underneath the sticky header.
+  React.useLayoutEffect(() => {
+    const el = navRef.current;
+    if (!el || open) return;
+    const set = () => document.documentElement.style.setProperty('--nav-h', Math.round(el.getBoundingClientRect().height) + 'px');
+    set();
+    window.addEventListener('resize', set);
+    return () => window.removeEventListener('resize', set);
+  }, [isMobile, open]);
+
+  // Collapse the burger menu if the viewport grows back to desktop.
+  React.useEffect(() => { if (!isMobile && open) setOpen(false); }, [isMobile, open]);
 
   const logo = React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 22, color: 'var(--cream)', letterSpacing: '-0.02em' } }, 'PdL');
   const linkStyle = (active, size) => ({
@@ -91,10 +106,12 @@ function NavBar({ items = [], activeHref, ctaLabel, ctaHref }) {
 
   if (isMobile) {
     return React.createElement('nav', {
+      ref: navRef,
       style: {
         position: 'sticky', top: 0, zIndex: 40,
         padding: '16px var(--page-margin)', borderBottom: 'var(--border-thick) solid var(--ink)',
         background: 'var(--void)', fontFamily: 'var(--font-pixel)',
+        maxHeight: '100dvh', overflowY: open ? 'auto' : 'visible',
       },
     },
       React.createElement('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' } },
@@ -122,7 +139,9 @@ function NavBar({ items = [], activeHref, ctaLabel, ctaHref }) {
   }
 
   return React.createElement('nav', {
+    ref: navRef,
     style: {
+      position: 'sticky', top: 0, zIndex: 40,
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       padding: '20px var(--page-margin)', borderBottom: 'var(--border-thick) solid var(--ink)',
       background: 'var(--void)', fontFamily: 'var(--font-pixel)',

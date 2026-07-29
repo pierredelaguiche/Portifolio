@@ -72,11 +72,29 @@
   box-sizing: border-box;
 }
 
+html {
+  /* Fallback until NavBar measures the real bar height at runtime. */
+  --nav-h: 78px;
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background: var(--void);
   color: var(--cream);
   font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* Keep anchored sections clear of the sticky header. */
+section[id] {
+  scroll-margin-top: calc(var(--nav-h) + 12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 a {
