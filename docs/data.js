@@ -41,8 +41,8 @@ const EDUCATION = [
 ];
 
 const DIPLOMAS = [
-  { org: 'TOEFL iBT', role: 'English Language Certificate — 98 (C1+)', when: '08.2024' },
-  { org: 'Goethe-Zertifikat', role: 'German Academic Language Certificate C1', when: '04.2026' },
+  { org: 'English Language Certificate — 98 (C1+)', role: 'TOEFL iBT', when: '08.2024' },
+  { org: 'German Academic Language Certificate C1', role: 'Goethe-Zertifikat', when: '04.2026' },
 ];
 
 // Written works — IB assessments and university coursework, written in LaTeX.
