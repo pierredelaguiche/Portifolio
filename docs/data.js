@@ -36,7 +36,7 @@ const EXPERIENCE = [
 ];
 
 const EDUCATION = [
-  { org: 'Lancaster University', role: 'BSc Computer Science (Hons)', when: '10.2024 – Present' },
+  { org: 'Lancaster University', role: 'BSc Computer Science (Hons)\nStudent representative', when: '10.2024 – Present' },
   { org: 'St. Charles International School', role: 'IB Diploma\nHL: Math AA, Physics, English | SL: Chemistry, Economics, German', when: '08.2022 – 06.2024' },
 ];
 
