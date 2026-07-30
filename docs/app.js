@@ -61,11 +61,16 @@ function About() {
 
 function ExperienceTimeline() {
   const isMobile = useIsMobile();
-  const row = (r) => React.createElement('div', {
+  // The final row drops its hairline and most of its bottom padding, so panels
+  // don't end on a rule floating above dead space.
+  const row = (r, i, arr) => React.createElement('div', {
     key: r.org + r.when,
-    style: isMobile
-      ? { display: 'flex', flexDirection: 'column', gap: 6, padding: '14px 0', borderBottom: '1px solid var(--border-hairline)', fontFamily: 'var(--font-body)' }
-      : { display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: 16, padding: '14px 0', borderBottom: '1px solid var(--border-hairline)', fontFamily: 'var(--font-body)', alignItems: 'baseline' },
+    style: Object.assign(
+      { paddingTop: 14, paddingBottom: i === arr.length - 1 ? 2 : 14, fontFamily: 'var(--font-body)', borderBottom: i === arr.length - 1 ? 'none' : '1px solid var(--border-hairline)' },
+      isMobile
+        ? { display: 'flex', flexDirection: 'column', gap: 6 }
+        : { display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: 16, alignItems: 'baseline' },
+    ),
   },
     isMobile ? React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)' } }, r.when) : null,
     React.createElement('div', null,
@@ -74,17 +79,18 @@ function ExperienceTimeline() {
     React.createElement('div', { style: { color: 'var(--text-muted)', fontSize: 'var(--text-body-sm)', lineHeight: 'var(--lh-normal)' } }, r.note || ''),
     isMobile ? null : React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', whiteSpace: 'nowrap' } }, r.when),
   );
-  // Education rows: institution on top, role/diploma detail below it, location bottom-right.
-  const eduRow = (r) => React.createElement('div', {
+  // Education / Diplomas rows: institution on top, detail below it, location
+  // bottom-right when there is one.
+  const eduRow = (r, i, arr) => React.createElement('div', {
     key: r.org + r.when,
-    style: { padding: '16px 0', borderBottom: '1px solid var(--border-hairline)' },
+    style: { paddingTop: 16, paddingBottom: i === arr.length - 1 ? 2 : 16, borderBottom: i === arr.length - 1 ? 'none' : '1px solid var(--border-hairline)' },
   },
     React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' } },
       React.createElement('div', { style: { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 20, textTransform: 'uppercase', color: 'var(--cream)', lineHeight: 'var(--lh-snug)' } }, r.org),
       React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-sm)', whiteSpace: 'nowrap' } }, r.when)),
     React.createElement('div', { style: { fontFamily: 'var(--font-body)', color: 'var(--text-muted)', fontSize: 'var(--text-body-sm)', marginTop: 6, lineHeight: 'var(--lh-normal)', whiteSpace: 'pre-line' } }, r.role),
-    React.createElement('div', { style: { display: 'flex', justifyContent: 'flex-end', marginTop: 10 } },
-      React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--steel)', fontSize: 'var(--text-pixel-sm)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)' } }, r.place)),
+    r.place ? React.createElement('div', { style: { display: 'flex', justifyContent: 'flex-end', marginTop: 10 } },
+      React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--steel)', fontSize: 'var(--text-pixel-sm)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)' } }, r.place)) : null,
   );
   return React.createElement('section', { id: 'cv', style: { padding: isMobile ? '64px var(--page-margin)' : '96px var(--page-margin)', borderBottom: '2px solid var(--ink)' } },
     React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--lime)', fontSize: 'var(--text-pixel-md)', textTransform: 'uppercase', marginBottom: 16 } }, '02 / CV'),
@@ -92,7 +98,7 @@ function ExperienceTimeline() {
     React.createElement(PixelPanel, { label: 'Save Data', variant: 'terminal' }, EXPERIENCE.map(row)),
     React.createElement('div', { style: { display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 24, marginTop: 24 } },
       React.createElement(PixelPanel, { label: 'Education' }, EDUCATION.map(eduRow)),
-      React.createElement(PixelPanel, { label: 'Diplomas' }, DIPLOMAS.map(row))),
+      React.createElement(PixelPanel, { label: 'Diplomas' }, DIPLOMAS.map(eduRow))),
   );
 }
 
@@ -109,7 +115,7 @@ function PaperCard({ paper, onSelect }) {
     style: {
       cursor: 'pointer', background: 'var(--void-2)', border: 'var(--border-thick) solid var(--ink)',
       boxShadow: hover ? 'var(--shadow-hard-lime)' : 'var(--shadow-hard-sm)',
-      transform: hover ? 'translate(-2px,-2px)' : 'none', padding: '24px',
+      transform: hover ? 'translate(-2px,-2px)' : 'none', padding: '24px 24px 18px',
       color: 'var(--cream)', fontFamily: 'var(--font-body)', display: 'flex', flexDirection: 'column',
     },
   },
@@ -121,7 +127,7 @@ function PaperCard({ paper, onSelect }) {
         key: t,
         style: { fontFamily: 'var(--font-pixel)', fontSize: 'var(--text-pixel-sm)', border: 'var(--border-thin) solid var(--border-hairline)', padding: '2px 8px', textTransform: 'uppercase' },
       }, t))),
-    React.createElement('div', { style: { display: 'flex', gap: 18, marginTop: 16 } },
+    React.createElement('div', { style: { display: 'flex', gap: 18, marginTop: 12 } },
       action('▸ Read paper', 'pdf'),
       action('▸ View LaTeX', 'latex')),
   );
