@@ -15,7 +15,7 @@ function Hero() {
     React.createElement('p', { style: { fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-lg)', color: 'var(--text-muted)', maxWidth: '52ch', marginTop: 28, lineHeight: 'var(--lh-normal)' } }, 'Computer science student at Lancaster University, physics-minded, working toward quantum machine learning.'),
     React.createElement('div', { style: { display: 'flex', gap: 16, marginTop: 40, flexWrap: 'wrap' } },
       React.createElement(Button, { variant: 'primary', glyph: '▸', href: '#papers' }, 'View Papers'),
-      React.createElement(Button, { variant: 'ghost', href: 'uploads/CV_Jun_26_English.pdf' }, 'Download CV'),
+      React.createElement(Button, { variant: 'ghost', href: 'uploads/CV_Sep_26_English.pdf' }, 'Download CV'),
       React.createElement(Tag, { variant: 'status' }, 'Open to work'),
     ),
   );
@@ -251,6 +251,7 @@ function Contact() {
     React.createElement('div', { style: { display: 'flex', gap: 16, flexWrap: 'wrap' } },
       React.createElement(Button, { variant: 'primary', glyph: '▸', href: 'mailto:pierre.delaguiche@gmail.com' }, 'pierre.delaguiche@gmail.com'),
       React.createElement(Button, { variant: 'secondary', href: 'https://github.com/pierredelaguiche' }, 'GitHub'),
+      React.createElement(Button, { variant: 'secondary', href: 'https://www.linkedin.com/in/pierre-de-laguiche-5b864530a' }, 'LinkedIn'),
       React.createElement(Button, { variant: 'ghost', href: 'tel:+4915147028433' }, '+49 151 47028433')),
     React.createElement('div', { style: { fontFamily: 'var(--font-pixel)', color: 'var(--steel)', fontSize: 'var(--text-pixel-sm)', marginTop: 64 } }, 'PdL © 2026'),
   );
@@ -260,7 +261,7 @@ function App() {
   const [active, setActive] = React.useState('#hero');
   const [sel, setSel] = React.useState(null); // { paper, tab }
   return React.createElement(React.Fragment, null,
-    React.createElement(NavBar, { items: NAV_ITEMS, activeHref: active, ctaLabel: 'Resume', ctaHref: 'uploads/CV_Jun_26_English.pdf' }),
+    React.createElement(NavBar, { items: NAV_ITEMS, activeHref: active, ctaLabel: 'Resume', ctaHref: 'uploads/CV_Sep_26_English.pdf' }),
     React.createElement('div', { onClickCapture: (e) => { const a = e.target.closest('a[href^="#"]'); if (a) setActive(a.getAttribute('href')); } },
       React.createElement(Hero),
       React.createElement(About),
